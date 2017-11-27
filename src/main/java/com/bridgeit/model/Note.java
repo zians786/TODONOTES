@@ -1,6 +1,6 @@
 package com.bridgeit.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Entity;
 
@@ -11,8 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import org.joda.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -32,6 +30,9 @@ public class Note {
 	private Date createdDate;
 
 	private Date modifiedDate;
+	
+	private Date reminder;
+
 
 	@ManyToOne()
     @JoinColumn(name = "userId")
@@ -39,15 +40,13 @@ public class Note {
 	private User user;
 
 	
-//	private boolean isArchived=false;;
-//
-//	// initially, note must be not in trash
-//	// so keep this true initially
-//	private boolean inTrash = false;
-//
-//	private String color =null;
-//
-//	private boolean isPinned=false;
+	private boolean isArchived=false;
+
+	private boolean inTrash = false;
+
+	private String color =null;
+
+	private boolean isPinned=false;
 
 	
 	
@@ -77,6 +76,7 @@ public class Note {
 	}
 
 
+
 	public Date getCreatedDate() {
 		return createdDate;
 	}
@@ -100,39 +100,48 @@ public class Note {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-//
-//	public boolean isArchived() {
-//		return isArchived;
-//	}
-//
-//	public void setArchived(boolean isArchived) {
-//		this.isArchived = isArchived;
-//	}
-//
-//	public boolean isInTrash() {
-//		return inTrash;
-//	}
-//
-//	public void setInTrash(boolean inTrash) {
-//		this.inTrash = inTrash;
-//	}
-//
-//	public String getColor() {
-//		return color;
-//	}
-//
-//	public void setColor(String color) {
-//		this.color = color;
-//	}
-//
-//	public boolean isPinned() {
-//		return isPinned;
-//	}
-//
-//	public void setPinned(boolean isPinned) {
-//		this.isPinned = isPinned;
-//	}
-//
+
+	public boolean isArchived() {
+		return isArchived;
+	}
+
+	public void setArchived(boolean isArchived) {
+		this.isArchived = isArchived;
+	}
+
+	public boolean isInTrash() {
+		return inTrash;
+	}
+
+	public void setInTrash(boolean inTrash) {
+		this.inTrash = inTrash;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public boolean isPinned() {
+		return isPinned;
+	}
+
+	public void setPinned(boolean isPinned) {
+		this.isPinned = isPinned;
+	}
+
+	public Date getReminder() {
+		return reminder;
+	}
+
+	public void setReminder(Date reminder) {
+		this.reminder = reminder;
+	}
+
+	
 
 	// @JsonIgnore is required so as to prevent Jackson fasterxml databind to go
 	// into loop

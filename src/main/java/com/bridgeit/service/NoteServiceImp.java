@@ -1,6 +1,10 @@
 package com.bridgeit.service;
 
-import java.sql.Date;
+
+
+
+
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,8 +30,9 @@ public class NoteServiceImp implements NoteService {
 		User user = new User();
 		user.setUserId(userId);
 		note.setUser(user);
-		note.setCreatedDate(new Date(System.currentTimeMillis()));
-		note.setModifiedDate(new Date(System.currentTimeMillis()));
+		Date date=new Date();
+		note.setCreatedDate(date);
+		note.setModifiedDate(date);
 		noteDao.create(note);
 
 	}
@@ -38,16 +43,52 @@ public class NoteServiceImp implements NoteService {
 
 	public void updateNote(Note note, String token) {
 		int userId = Integer.parseInt(token);
-		User user = new User();
-		user.setUserId(userId);
-		note.setUser(user);
-		note.setModifiedDate(new Date(System.currentTimeMillis()));
-		noteDao.update(note);
+		
+		Note note1=noteDao.read(note);
+		note1.setTitle(note.getTitle());
+		note1.setDescription(note.getDescription());
+		Date date=new Date();
+		note1.setModifiedDate(date);
+		
+//		User user = new User();
+//		user.setUserId(userId);
+//		note.setUser(user);
+//		note.setModifiedDate(new Date());
+		noteDao.update(note1);
 
 	}
 
 	public Note readNote(Note note) {
 		return noteDao.read(note);
+	}
+
+	@Override
+	public void archiveNote(Note note,int userId) {
+		noteDao.archive(note, userId);
+	}
+
+	@Override
+	public void trashNote(Note note,int userId) {
+		noteDao.trash(note, userId);
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void pinNote(Note note,int userId) {
+		noteDao.pin(note, userId);
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void coloerNote(Note note,int userId) {
+		noteDao.color(note, userId);
+	}
+
+	@Override
+	public void remindNote(Note note, int userId) {
+		noteDao.remind(note, userId);
 	}
 
 }

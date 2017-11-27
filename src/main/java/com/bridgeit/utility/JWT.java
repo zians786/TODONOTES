@@ -25,6 +25,20 @@ public class JWT {
 		return jwToken;
 	}
 
+	public String jwtGenerator(int id) {
+		String uId=Integer.toString(id);
+		
+		String jwToken = Jwts.builder()
+				.setSubject("Registration")
+				.setId(uId)
+				.signWith(SignatureAlgorithm.HS512, key)
+				.compact();
+
+		return jwToken;
+	}
+	
+	
+	
 	public String jwtVerify(String jwToken) {
 		String status;
 		try {
@@ -36,4 +50,20 @@ public class JWT {
 		return status;
 	}
 
+	
+
+	public int jwtVerifyToken(String jwToken) {
+		int status;
+		try {
+			Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(jwToken).getBody();
+			String id = claims.getId();
+			status=Integer.parseInt(id);
+			
+		} catch (Exception e) {
+			status = 0;
+		}
+		return status;
+	}
+
+	
 }

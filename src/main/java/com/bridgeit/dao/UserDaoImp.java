@@ -83,4 +83,10 @@ public class UserDaoImp implements UserDao {
 		return user;
 	}
 
+	@Override
+	public void resetPassword(int userId,User user) {
+		Query query=getSession().createQuery("update User set password='"+user.getPassword()+"' where userId='"+userId+"'");
+		query.executeUpdate();
+	}
+
 }

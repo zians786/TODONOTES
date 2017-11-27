@@ -79,8 +79,9 @@ public class ServiceImp implements Service {
 	public String forgetPassword(String userEmail) {
 		String result = null;
 		if (userDao.emailValidaton(userEmail)) {
-			String password = userDao.getPassword(userEmail);
-			email.forgetEmail(userEmail, password);
+			User user = userDao.getUserByEmailId(userEmail);
+			String token=jwt.jwtGenerator(user.getUserId());
+			email.forgetEmail(userEmail, token);
 			result = "Password has been Sent to your email.";
 		} else {
 			result = "This email is not Register with us.";
@@ -88,6 +89,30 @@ public class ServiceImp implements Service {
 		return result;
 	}
 
+
+	@Override
+	public String resetPassword(String token,User user) {
+
+		String uid = jwt.jwtVerify(token);
+		int userId = Integer.parseInt(uid);
+
+		String result = null;
+
+		if (uid!=null) 
+		{
+			String password=user.getPassword();
+			user.setPassword(encrypt.encryptPassword(password));
+			
+			userDao.resetPassword(userId,user);
+			result = "Your Password Reset Successull";
+		} else {
+			result = "Invalid Token or User may not Registered with us..";
+		}
+		return result;
+
+	}
+	
+	
 	@Override
 	public String registerSocialAccountUser(JsonNode profile) {
 
@@ -111,5 +136,7 @@ public class ServiceImp implements Service {
 		}
 
 	}
+
+
 
 }

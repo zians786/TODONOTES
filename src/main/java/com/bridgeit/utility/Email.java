@@ -61,8 +61,9 @@ public class Email {
 	}
 
 	@Async
-	public Boolean forgetEmail(String to,String userPassword) {
+	public Boolean forgetEmail(String to,String token) {
 		Boolean status;
+		String url="http://localhost:8080/ToDoNotes/reset/"+token;
 		final String from = "strangedoctor786@gmail.com";// change accordingly
 		final String password = "deadpool";
 		Properties properties = System.getProperties();
@@ -84,10 +85,10 @@ public class Email {
 			MimeMessage message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(from));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-			message.setSubject("Password");
+			message.setSubject("Reset Password");
 			message.setSentDate(new Date());
 			
-			message.setText("Hello, your Password is :"+userPassword);
+			message.setText("Hello, Click on given link to Reset your Password "+url);
 
 			// Send message
 			Transport.send(message);

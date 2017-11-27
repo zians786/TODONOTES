@@ -88,5 +88,87 @@ public class NoteController {
 		}
 
 	}
+	
+	@RequestMapping(value = "notes/archive", method = RequestMethod.POST)
+	public ResponseEntity<String> archive(@RequestBody Note note, HttpServletRequest request) {
+		int userId = jwtObject.jwtVerifyToken(request.getHeader("accToken"));
+
+		if (userId != 0) {
+			 noteService.archiveNote(note,userId);
+			return new ResponseEntity<String>("success", HttpStatus.OK);
+
+		} else {
+		
+			return new ResponseEntity<String>("Discarded", HttpStatus.CONFLICT);
+		}
+
+	}
+	
+	
+	
+	@RequestMapping(value = "notes/trash", method = RequestMethod.POST)
+	public ResponseEntity<String> trash(@RequestBody Note note, HttpServletRequest request) {
+		int userId = jwtObject.jwtVerifyToken(request.getHeader("accToken"));
+
+		if (userId != 0) {
+			 noteService.trashNote(note, userId);
+			return new ResponseEntity<String>("success", HttpStatus.OK);
+
+		} else {
+		
+			return new ResponseEntity<String>("Discarded", HttpStatus.CONFLICT);
+		}
+	}
+	
+	@RequestMapping(value = "notes/pin", method = RequestMethod.POST)
+	public ResponseEntity<String> pin(@RequestBody Note note, HttpServletRequest request) {
+		int userId = jwtObject.jwtVerifyToken(request.getHeader("accToken"));
+
+		if (userId != 0) {
+			 noteService.pinNote(note, userId);
+			return new ResponseEntity<String>("success", HttpStatus.OK);
+
+		} else {
+		
+			return new ResponseEntity<String>("Discarded", HttpStatus.CONFLICT);
+		}
+	}
+	
+	
+	@RequestMapping(value = "notes/color", method = RequestMethod.POST)
+	public ResponseEntity<String> color(@RequestBody Note note, HttpServletRequest request) {
+
+		int userId = jwtObject.jwtVerifyToken(request.getHeader("accToken"));
+
+		if (userId != 0) {
+			 noteService.coloerNote(note, userId);
+			return new ResponseEntity<String>("success", HttpStatus.OK);
+
+		} else {
+		
+			return new ResponseEntity<String>("Discarded", HttpStatus.CONFLICT);
+		}
+
+		
+	}
+	
+	
+	@RequestMapping(value = "notes/reminder", method = RequestMethod.POST)
+	public ResponseEntity<String> reminder(@RequestBody Note note, HttpServletRequest request) {
+
+		int userId = jwtObject.jwtVerifyToken(request.getHeader("accToken"));
+
+		if (userId != 0) {
+			 noteService.remindNote(note, userId);
+			return new ResponseEntity<String>("success", HttpStatus.OK);
+
+		} else {
+		
+			return new ResponseEntity<String>("Discarded", HttpStatus.CONFLICT);
+		}
+
+		
+	}
+	
 
 }

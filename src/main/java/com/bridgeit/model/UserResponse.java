@@ -1,9 +1,7 @@
 package com.bridgeit.model;
 
-import org.springframework.stereotype.Component;
+public class UserResponse {
 
-@Component
-public class Response {
 
 	private String message;
 	public String getMessage() {

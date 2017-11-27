@@ -14,5 +14,9 @@ public interface Service {
 	
 	String forgetPassword(String email);
 	
+	String resetPassword(String token, User user);
+	
 	String registerSocialAccountUser(JsonNode profile);
+	
+	
 }
