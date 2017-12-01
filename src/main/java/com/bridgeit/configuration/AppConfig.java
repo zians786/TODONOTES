@@ -12,6 +12,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableAsync
 @ComponentScan(basePackages = "com.bridgeit")
 public class AppConfig {
+	
+	
 	}
   
     
