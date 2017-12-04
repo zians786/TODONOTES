@@ -1,7 +1,6 @@
 package com.bridgeit.controller;
 
 import javax.servlet.http.HttpServletRequest;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,16 +30,14 @@ public class UserController {
 	@Autowired
 	Validation validate;
 
-
-	
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String welcome() {
 		return "Welcome";
 	}
 
-	
 	@RequestMapping(value = { "/register" }, method = RequestMethod.POST)
-	public ResponseEntity<String> registration(@RequestBody User user) {
+	public ResponseEntity<String> registration(@RequestBody User user, HttpServletRequest request) {
+		System.out.println("hulyuhuluhuluhulu");
 
 		if (validate.userValidate(user)) {
 			String message = service.registrationValidate(user);
@@ -51,15 +48,14 @@ public class UserController {
 		}
 	}
 
-	
 	@RequestMapping(value = { "/login" }, method = RequestMethod.POST)
 	public ResponseEntity<UserResponse> login(@RequestBody User user, HttpServletRequest request) {
-		UserResponse response=new UserResponse();
+		UserResponse response = new UserResponse();
 		String token = service.loginValidate(user);
 		if (token != null) {
 
 			HttpSession session = request.getSession();
-			response.setMessage("Welcome " + user.getUserName()); 
+			response.setMessage("Welcome " + user.getUserName());
 			response.setToken(token);
 			return new ResponseEntity<UserResponse>(response, HttpStatus.OK);
 
@@ -69,30 +65,28 @@ public class UserController {
 		}
 	}
 
-	@RequestMapping(value= "/activate/{jwt:.+}",method=RequestMethod.POST)
-	public ResponseEntity<String>activation(@PathVariable String jwt){
-		String status=service.verifyToken(jwt);
+	@RequestMapping(value = "/activate/{jwt:.+}", method = RequestMethod.POST)
+	public ResponseEntity<String> activation(@PathVariable String jwt) {
+		String status = service.verifyToken(jwt);
 		return new ResponseEntity<String>(status, HttpStatus.OK);
-		
-	}
-	
-	@RequestMapping(value= {"/forgot"},method=RequestMethod.POST)
-	public ResponseEntity<String> forgot(@RequestBody User user){
-	
-		String message=service.forgetPassword(user.getEmail());
-		return new ResponseEntity<String>(message, HttpStatus.OK);
-		
-	}
-	
 
-	@RequestMapping(value= "/reset/{jwt:.+}",method=RequestMethod.POST)
-	public ResponseEntity<String>resetPassword(@PathVariable String jwt,@RequestBody User user){
-		String status=service.resetPassword(jwt,user);
-		return new ResponseEntity<String>(status, HttpStatus.OK);
-		
 	}
-	
-	
+
+	@RequestMapping(value = { "/forgot" }, method = RequestMethod.POST)
+	public ResponseEntity<String> forgot(@RequestBody User user) {
+
+		String message = service.forgetPassword(user.getEmail());
+		return new ResponseEntity<String>(message, HttpStatus.OK);
+
+	}
+
+	@RequestMapping(value = "/reset/{jwt:.+}", method = RequestMethod.POST)
+	public ResponseEntity<String> resetPassword(@PathVariable String jwt, @RequestBody User user) {
+		String status = service.resetPassword(jwt, user);
+		return new ResponseEntity<String>(status, HttpStatus.OK);
+
+	}
+
 	@RequestMapping(value = { "/logout" }, method = RequestMethod.POST)
 	public ResponseEntity<String> logout(HttpServletRequest request) {
 		String message = "No Active Session";
