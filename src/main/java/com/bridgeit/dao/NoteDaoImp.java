@@ -1,5 +1,7 @@
 package com.bridgeit.dao;
 
+import java.util.List;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.bridgeit.model.Note;
+import com.bridgeit.model.User;
 
 @Component
 public class NoteDaoImp implements NoteDao{
@@ -50,7 +53,17 @@ public class NoteDaoImp implements NoteDao{
 		
 	}
 
-
+	public List<Note> read(User user) {
+		Query query=getSession().createQuery("from Note where userId='"+user.getUserId()+"'");
+		List<Note> note1= query.list();
+		return note1;
+		
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
 	@Override
 	public void archive(Note note, int userId) {
 	Query query=getSession().createQuery("select isArchived from Note where noteId='"+note.getNoteId()+"' and userId='"+userId+"' ");

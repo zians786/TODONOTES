@@ -1,10 +1,7 @@
 package com.bridgeit.service;
 
-
-
-
-
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -58,8 +55,12 @@ public class NoteServiceImp implements NoteService {
 
 	}
 
-	public Note readNote(Note note) {
-		return noteDao.read(note);
+	public List<Note> readNote(String token) {
+		User user=new User();
+		int id=Integer.parseInt(token);
+		user.setUserId(id);
+		
+		return noteDao.read(user);
 	}
 
 	@Override

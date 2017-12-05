@@ -33,7 +33,7 @@ public class Validation {
 //}
 
 public  boolean userValidate(User user) {
-	String userNumber=Long.toString(user.getNumber());
+	String userNumber=user.getNumber();
 	boolean valid = true;
 	String phoneNumRegx = "^[0-9]{10}$";
 	String nameRegx = "^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$";

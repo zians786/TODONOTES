@@ -43,16 +43,17 @@
 
  <!-- CONTROLLERS -->
 <script src="controller/loginController.js"></script>
-
+<script src="controller/noteController.js"></script>
 
  <script src="controller/registerController.js"></script>
   <script src="controller/resetController.js"></script>
  
 
  <!-- SERVICES -->
-<script type="text/javascript" src="service/loginService.js"></script>
- <script type="text/javascript" src="service/registerService.js"></script>
- <script type="text/javascript" src="service/resetService.js"></script>
+<script src="service/loginService.js"></script>
+ <script src="service/registerService.js"></script>
+ <script src="service/resetService.js"></script>
+ <script src="service/noteService.js"></script>
 <!-- DIRECTIVE -->
 
 

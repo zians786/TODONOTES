@@ -20,8 +20,9 @@ public class User {
 	
 	private String email;
 	
-	private long number;
-	private String userName,password;
+	private String number;
+	private String userName;
+	private String password;
 	Boolean active=false;
 	
 
@@ -47,10 +48,10 @@ public class User {
 	}
 
 	
-	public long getNumber() {
+	public String getNumber() {
 		return number;
 	}
-	public void setNumber(long number) {
+	public void setNumber(String number) {
 		this.number = number;
 	}
 	public String getUserName() {

@@ -33,6 +33,12 @@ todo.config([ '$stateProvider', '$urlRouterProvider',
 				controller:'resetController'
 				});
 			
+			$stateProvider.state('home',{
+				url:'/home',
+				templateUrl :'template/home.html',
+				controller:'noteController'
+				});
+			
 			$urlRouterProvider.otherwise('login');
 			
 		} ]);

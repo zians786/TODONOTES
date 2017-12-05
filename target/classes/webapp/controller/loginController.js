@@ -8,11 +8,10 @@ ToDo.controller('loginController',function($scope,loginService,$location){
 		var a = loginService.loginUser($scope.user,$scope.error);
 		console.log(a);
 			a.then(function(response){
-				console.log(response.data.responseMessage);
-				localStorage.setItem('token',response.data.responseMessage);
+				console.log(response.data.token);
+				localStorage.setItem('token',response.data.token);
 				console.log("login success");
-				localStorage.removeItem('token');
-//				$location.path('home');
+				$location.path('home');
 		},function(response){
 				if(response.status==409)
 					{

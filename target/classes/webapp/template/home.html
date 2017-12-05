@@ -1,0 +1,71 @@
+	    <!-- Angular Material Dependencies-->
+<div layout="column" ng-cloak="ng-cloak">
+
+<md-toolbar layout="row">
+
+  <md-button>Menu</md-button>
+  <h4>Google Keep</h4>
+</md-toolbar>
+
+<div class="container" layout="row" flex>
+<md-sidenav md-is-locked-open="true" class="md-whiteframe-4dp">
+<md-list>
+
+  <md-list-item>
+    <md-button flex>
+    <md-icon></md-icon>Notes
+    </md-button>
+  </md-list-item>
+
+  <md-list-item>
+    <md-button flex>
+    <md-icon></md-icon>Reminder
+    </md-button>
+  </md-list-item>
+<md-divider></md-divider>
+</md-list>
+</md-sidenav>
+
+
+<md-content>
+
+<md-card>
+<md-card-content>
+
+<div contenteditable="true" ng-bind="title" role="textbox"  style="border:0px;outline:0px"></div>
+<div contenteditable="true" ng-bind="descript" role="textbox"  style="border:0px;outline:0px"></div>
+
+</md-card-content>
+
+</md-card>
+
+
+  <md-card flex>
+            <md-card-content>
+
+                <input type="text" ng-model="note.title" placeholder="Title"></input><br>
+              <input type="text" ng-model="note.description" placeholder="Take a note"></input>
+                      <md-button ng-click="addNote()">Done</md-button>
+
+            </md-card-content>
+
+  </md-card>
+
+
+<div ng-repeat="note in readNotes">
+
+<md-card flex>
+      <md-card-title>
+        <span class="md-headline" ng-bind="note.title">Title</span>
+      </md-card-title>
+          <md-card-content>
+           <span ng-bind="note.description"></span> 
+          </md-card-content>
+</md-card>
+
+
+</div>
+
+
+</md-content>
+</div></div>

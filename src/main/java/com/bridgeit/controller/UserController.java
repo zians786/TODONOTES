@@ -1,6 +1,7 @@
 package com.bridgeit.controller;
 
 import javax.servlet.http.HttpServletRequest;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,15 +37,15 @@ public class UserController {
 	}
 
 	@RequestMapping(value = { "/register" }, method = RequestMethod.POST)
-	public ResponseEntity<String> registration(@RequestBody User user, HttpServletRequest request) {
-		System.out.println("hulyuhuluhuluhulu");
-
+	public ResponseEntity<UserResponse> registration(@RequestBody User user) {
+		UserResponse message=new UserResponse();
+		
 		if (validate.userValidate(user)) {
-			String message = service.registrationValidate(user);
-			return new ResponseEntity<String>(message, HttpStatus.OK);
+			 message.setMessage(service.registrationValidate(user));
+			return new ResponseEntity<UserResponse>(message, HttpStatus.OK);
 		} else {
-			String message = "Please Enter Correct Values...";
-			return new ResponseEntity<String>(message, HttpStatus.CONFLICT);
+			message.setMessage("Please Enter Correct Values...");
+			return new ResponseEntity<UserResponse>(message, HttpStatus.CONFLICT);
 		}
 	}
 
@@ -65,7 +66,7 @@ public class UserController {
 		}
 	}
 
-	@RequestMapping(value = "/activate/{jwt:.+}", method = RequestMethod.POST)
+	@RequestMapping(value = "/activate/{jwt:.+}", method = RequestMethod.GET)
 	public ResponseEntity<String> activation(@PathVariable String jwt) {
 		String status = service.verifyToken(jwt);
 		return new ResponseEntity<String>(status, HttpStatus.OK);
