@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+[contenteditable=true]:empty:not(:focus):before{
+        content:attr(data-text)
+    }
+
+md-icon{
+    cursor: pointer;
+}
+    

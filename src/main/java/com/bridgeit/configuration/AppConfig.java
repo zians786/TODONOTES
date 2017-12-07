@@ -26,7 +26,9 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	    registry.addResourceHandler("/service/**").addResourceLocations("/service/");
 	    registry.addResourceHandler("/template/**").addResourceLocations("/template/");
 	    registry.addResourceHandler("/bower_components/**").addResourceLocations("/bower_components/");
-		}
+	    registry.addResourceHandler("/img/**").addResourceLocations("/img/");
+	    
+	}
 	
 	   @Bean
 	   public ViewResolver viewResolver() {

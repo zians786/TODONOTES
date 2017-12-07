@@ -24,6 +24,41 @@ ToDo.factory('noteService',function($http,$location){
 		});
 	}
 
+	
+	userNote.delete=function(note){
+		return $http({
+			method:"POST",
+			url:"notes/delete",
+			data: note,
+			headers: { 'accToken': localStorage.getItem('token')
+			}
+		});
+		
+		
+	}
+	
+	userNote.trash=function(note){
+		return $http({
+			method:"POST",
+			url:"notes/trash",
+			data:note,
+			headers: {'accToken': localStorage.getItem('token')
+			}
+		});
+	}
+	
+	
+
+	userNote.archive=function(note){
+		return $http({
+			method:"POST",
+			url:"notes/archive",
+			data:note,
+			headers: {'accToken': localStorage.getItem('token')
+			}
+		});
+	}
+	
 
 	return userNote;
 });

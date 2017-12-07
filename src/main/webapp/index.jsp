@@ -27,9 +27,9 @@
       <script src="bower_components/angular-material/angular-material.min.js"></script> 
 
  <!-- CSS -->
-<!-- <link rel="stylesheet" type="text/css" href="css/signup.css"> 
-<link rel="stylesheet" type="text/css" href="css/login.css">
-
+<link rel="stylesheet" type="text/css" href="css/Mycss.css"> 
+<!-- <link rel="stylesheet" type="text/css" href="css/login.css">
+ -->
 <!-- JAVASCRIPT 
 <script type="text/javascript" src="script/formInput.js"></script>
 
@@ -55,7 +55,7 @@
  <script src="service/resetService.js"></script>
  <script src="service/noteService.js"></script>
 <!-- DIRECTIVE -->
-
+<script src="directive/allDirective.js"></script>
 
 </head>
 

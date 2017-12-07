@@ -49,16 +49,18 @@ public class NoteController {
 	}
 
 	@RequestMapping(value = "notes/delete", method = RequestMethod.POST)
-	public ResponseEntity<String> delete(@RequestBody Note note, HttpServletRequest request) {
+	public ResponseEntity<UserResponse> delete(@RequestBody Note note, HttpServletRequest request) {
 
 		String token = jwtObject.jwtVerify(request.getHeader("accToken"));
-
+		UserResponse message=new UserResponse();
 		if (token != null) {
 			noteService.deleteNote(note);
-			return new ResponseEntity<String>("Note Deleted Successfully.", HttpStatus.OK);
+			message.setMessage("Note Deleted Successfully.");
+			return new ResponseEntity<UserResponse>(message, HttpStatus.OK);
 
 		} else {
-			return new ResponseEntity<String>("Invalid Token", HttpStatus.CONFLICT);
+			message.setMessage("Invalid Token");
+			return new ResponseEntity<UserResponse>(message, HttpStatus.CONFLICT);
 		}
 
 	}
@@ -95,16 +97,17 @@ public class NoteController {
 	}
 	
 	@RequestMapping(value = "notes/archive", method = RequestMethod.POST)
-	public ResponseEntity<String> archive(@RequestBody Note note, HttpServletRequest request) {
+	public ResponseEntity<UserResponse> archive(@RequestBody Note note, HttpServletRequest request) {
 		int userId = jwtObject.jwtVerifyToken(request.getHeader("accToken"));
-
+		UserResponse message=new UserResponse();
 		if (userId != 0) {
 			 noteService.archiveNote(note,userId);
-			return new ResponseEntity<String>("success", HttpStatus.OK);
+			 message.setMessage("Note Archived");
+			return new ResponseEntity<UserResponse>(message, HttpStatus.OK);
 
 		} else {
-		
-			return new ResponseEntity<String>("Discarded", HttpStatus.CONFLICT);
+			message.setMessage("Invalid Token");
+			return new ResponseEntity<UserResponse>(message, HttpStatus.CONFLICT);
 		}
 
 	}
@@ -112,16 +115,16 @@ public class NoteController {
 	
 	
 	@RequestMapping(value = "notes/trash", method = RequestMethod.POST)
-	public ResponseEntity<String> trash(@RequestBody Note note, HttpServletRequest request) {
+	public ResponseEntity<UserResponse> trash(@RequestBody Note note, HttpServletRequest request) {
 		int userId = jwtObject.jwtVerifyToken(request.getHeader("accToken"));
-
+		UserResponse message=new UserResponse();
 		if (userId != 0) {
 			 noteService.trashNote(note, userId);
-			return new ResponseEntity<String>("success", HttpStatus.OK);
-
+			 message.setMessage("Note Trashed");
+			return new ResponseEntity<UserResponse>(message, HttpStatus.OK);
 		} else {
-		
-			return new ResponseEntity<String>("Discarded", HttpStatus.CONFLICT);
+			message.setMessage("Invalid Token");
+			return new ResponseEntity<UserResponse>(message, HttpStatus.CONFLICT);
 		}
 	}
 	
