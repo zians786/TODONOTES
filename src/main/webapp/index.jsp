@@ -56,7 +56,7 @@
  <script src="service/noteService.js"></script>
 <!-- DIRECTIVE -->
 <script src="directive/allDirective.js"></script>
-
+<script src="directive/color-picker.js"></script>
 </head>
 
 

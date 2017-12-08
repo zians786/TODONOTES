@@ -59,6 +59,15 @@ ToDo.factory('noteService',function($http,$location){
 		});
 	}
 	
+	userNote.color=function(note){
+			return $http({
+				method:"POST",
+				url:"notes/color",
+				data:note,
+				headers: {'accToken': localStorage.getItem('token')
+				}
+			});
+	}
 
 	return userNote;
 });

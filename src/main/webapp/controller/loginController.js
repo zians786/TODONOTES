@@ -25,6 +25,13 @@ ToDo.controller('loginController',function($scope,loginService,$location){
 			});
 	}
 	
+	$scope.fbLogin=function(){
+		var fbResponse=loginService.fblogin();
+		fbResponse.then(function(response){
+			console.log("working");
+		});
+	}
+	
 	
 	$scope.register=function(){
 		$location.path('/register');

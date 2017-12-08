@@ -158,9 +158,9 @@
 
   
 <div layout="row" layout-align="center center" layout-wrap>
-<div ng-mouseenter="mouse=true" ng-mouseleave="mouse=false" ng-repeat="note in readNotes" flex={{flex}}>
+<div  ng-repeat="note in readNotes" flex={{flex}}  >
 
-<md-card >
+<md-card ng-mouseenter="mouse=true" ng-mouseleave="mouse=false" style="background-color:{{note.color}};">
       <md-card-title>
         <div style="overflow-wrap: break-word;contenteditable="false" class="md-headline" >{{note.title}} </div>
       </md-card-title>
@@ -176,6 +176,7 @@
 <div role="button"  aria-label="Change color"><md-icon md-svg-icon="img/icons/color.svg"></md-icon></div>
 <div role="button"  aria-label="Add image"><md-icon md-svg-icon="img/icons/image.svg"></md-icon></div>
 <div role="button" ng-click="archive(note)" aria-label="Archive"><md-icon md-svg-icon="img/icons/archive.svg"></md-icon></div>
+<color-picker color="color" options="options" on-color-changed="colorChanged(newColor,note)"></color-picker>
 
 
   <md-menu-bar>
@@ -192,7 +193,7 @@
               </md-menu-item>
                        </md-menu-content>
           </md-menu>
-
+	
  </md-menu-bar>
 
 

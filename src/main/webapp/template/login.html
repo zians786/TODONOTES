@@ -7,16 +7,20 @@
 		ng-cloak="ng-cloak" class="login-form"> <md-card
 		layout="row" layout-align="space-around center"> 
 		
-<md-card-content 
-		layout="column"> <md-card-title> <md-card-title-text>
-	<span class="md-headline">Login With</span> </md-card-title-text> </md-card-title> <md-button
-		ng-click="vm.submit()" class="md-raised md-primary">&nbsp
-	Login With Facebook &nbsp</md-button> <md-button ng-click="vm.submit()"
-		class="md-raised md-primary">&nbsp Login With Google &nbsp</md-button>
+<md-card-content layout="column">
+ <md-card-title> 
+ <md-card-title-text>
+	<span class="md-headline">Login With</span> 
+</md-card-title-text> 
+</md-card-title>
+	 
+	<md-button href="http://localhost:8080/ToDoNotes/social/fbLogin"	ng-click="fbLogin()" class="md-raised md-primary">&nbsp
+	Login With Facebook &nbsp</md-button> 
+	<md-button ng-click="googleLogin()"class="md-raised md-primary">&nbsp Login With Google &nbsp</md-button>
 
 	</md-card-content> 
 	
-	<md-card-content  > <md-card-title> <md-card-title-text>
+	<md-card-content> <md-card-title> <md-card-title-text>
 	<span class="md-headline">Sign In</span> </md-card-title-text> </md-card-title>
 
 

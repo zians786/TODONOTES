@@ -12,6 +12,19 @@ ToDo.factory('loginService',function($http,$location){
 			data : user
 		});
 	}
+	
+	
+	login.fblogin=function(){
+		return $http({
+			method:"GET",
+			url:'social/fbLogin'
+		});
+	}
+	
+	
+	login.glogin=function(){
+		
+	}
 
 	return login;
 });

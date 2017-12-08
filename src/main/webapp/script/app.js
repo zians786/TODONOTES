@@ -1,5 +1,5 @@
 var todo = angular.module('TODO', [ 'ui.router', 'ngSanitize', 'ngAnimate',
-		'ngMaterial' ]);
+		'ngMaterial','tb-color-picker']);
 
 todo.config([ '$stateProvider', '$urlRouterProvider',
 		function($stateProvider, $urlRouterProvider) {
@@ -38,6 +38,12 @@ todo.config([ '$stateProvider', '$urlRouterProvider',
 				templateUrl :'template/home.html',
 				controller:'noteController'
 				});
+			
+			$stateProvider.state('social/dummy',{
+				url:'/dummy',
+				templateUrl :'template/dummy.html',
+				
+			});
 			
 			$urlRouterProvider.otherwise('login');
 			

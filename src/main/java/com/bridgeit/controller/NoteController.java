@@ -144,17 +144,18 @@ public class NoteController {
 	
 	
 	@RequestMapping(value = "notes/color", method = RequestMethod.POST)
-	public ResponseEntity<String> color(@RequestBody Note note, HttpServletRequest request) {
+	public ResponseEntity<UserResponse> color(@RequestBody Note note, HttpServletRequest request) {
 
 		int userId = jwtObject.jwtVerifyToken(request.getHeader("accToken"));
-
+		UserResponse message=new UserResponse();
 		if (userId != 0) {
 			 noteService.coloerNote(note, userId);
-			return new ResponseEntity<String>("success", HttpStatus.OK);
+			 message.setMessage("color changed");
+			return new ResponseEntity<UserResponse>(message, HttpStatus.OK);
 
 		} else {
-		
-			return new ResponseEntity<String>("Discarded", HttpStatus.CONFLICT);
+			message.setMessage("Invalid Token");
+			return new ResponseEntity<UserResponse>(message, HttpStatus.CONFLICT);
 		}
 
 		
