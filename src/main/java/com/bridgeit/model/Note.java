@@ -2,13 +2,13 @@ package com.bridgeit.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -33,6 +33,7 @@ public class Note {
 	
 	private Date reminder;
 
+	private String image;
 
 	@ManyToOne()
     @JoinColumn(name = "userId")
@@ -40,9 +41,9 @@ public class Note {
 	private User user;
 
 	
-	private boolean isArchived=false;
+	private boolean isArchived;
 
-	private boolean inTrash = false;
+	private boolean inTrash;
 
 	private String color =null;
 
@@ -53,6 +54,14 @@ public class Note {
 	
 	public User getUser() {
 		return user;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	public void setUser(User user) {

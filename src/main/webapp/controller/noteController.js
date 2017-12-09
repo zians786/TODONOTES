@@ -1,8 +1,8 @@
 var todo=angular.module("TODO");
-todo.controller('noteController',function($scope,noteService,$location){
+todo.controller('noteController',function($scope,noteService,$location,$mdDialog){
 
 
-	//for fetching all the User notes 
+	// for fetching all the User notes
 	var read=noteService.read();
 	read.then(function(response){
 		console.log(response.data);
@@ -20,7 +20,7 @@ todo.controller('noteController',function($scope,noteService,$location){
 	});
 	
 	
-	//funtion to be called after any operation on notes
+	// funtion to be called after any operation on notes
 	var getNotes=function(){
 	var read=noteService.read();
 	read.then(function(response){
@@ -30,7 +30,7 @@ todo.controller('noteController',function($scope,noteService,$location){
 	}
 	
 	
-	//for deleting notes
+	// for deleting notes
 	$scope.delete=function(note){
 		console.log(note);
 		var noteDelete=noteService.delete(note);
@@ -42,7 +42,7 @@ todo.controller('noteController',function($scope,noteService,$location){
 	
 	
 	
-	//for trash
+	// for trash
 	$scope.trash=function(note){
 		console.log(note);
 		var trashNote=noteService.trash(note);
@@ -53,7 +53,7 @@ todo.controller('noteController',function($scope,noteService,$location){
 	}
 	
 	
-	//for archived
+	// for archived
 	$scope.archive=function(note){
 		console.log(note);
 		var archiveNote=noteService.archive(note);
@@ -64,7 +64,7 @@ todo.controller('noteController',function($scope,noteService,$location){
 	}
 	
 	
-	//for logout
+	// for logout
 	$scope.logout=function(){
 		localStorage.clear();
 		$location.path('login');
@@ -75,7 +75,7 @@ todo.controller('noteController',function($scope,noteService,$location){
 	
 	
 	
-	//for adding user notes
+	// for adding user notes
 	$scope.addNote=function(){
 		var add=noteService.add($scope.note,$scope.error);
 		add.then(function(response){
@@ -100,9 +100,82 @@ todo.controller('noteController',function($scope,noteService,$location){
 	}
 	
 	
+	// for editing notes inside Dialog
+	$scope.showDialog=function(editNote){
+		console.log("inside showDialog ");
+		$scope.notes= angular.copy(editNote);
+		  $mdDialog.show({
+			    contentElement: '#myStaticDialog',
+			    parent: angular.element(document.body),
+		      clickOutsideToClose:true
+			  });
+			}
+	// for updating notes
+		    $scope.updateNote = function(note) {
+		    	console.log("inside dialog controller");
+		    	var updateResponse=noteService.update(note);
+		    	updateResponse.then(function(response){
+		    		$mdDialog.hide();
+		    		getNotes();
+		    	});
+		      
+		    };
+
+	//for uploading image
+		    $scope.uploadImage = function(type) {
+				$scope.type = type;
+				$('#image').trigger('click');
+				return false;
+		    }
+		    
+		    $scope.stepsModel = [];
+		    $scope.imageUpload = function(element){
+			    var reader = new FileReader();
+			    console.log("ele"+element);
+			    reader.onload = $scope.imageIsLoaded;
+			    reader.readAsDataURL(element.files[0]);
+			    console.log(element.files[0]);
+			}
+		
+			$scope.imageIsLoaded = function(e){
+			    $scope.$apply(function() {
+			        $scope.stepsModel.push(e.target.result);
+			        console.log(e.target.result);
+			        var imageSrc=e.target.result;
+			        if($scope.type ==='input')
+		        	{
+			        	$scope.addImg= imageSrc;
+		        	}else if($scope.type ==='user'){
+		        		$scope.user.picUrl=imageSrc;
+		        		updateUser($scope.user);
+		        	}else if($scope.type ==='update'){
+		        		$scope.changeIamge.image=imageSrc;
+		        		update($scope.changeIamge);
+		        	}
+			        else{
+			        	
+		        		$scope.type.image=imageSrc;
+//		        		console.log(e.target.result);
+//		        		console.log(imageSrc);
+		        		console.log($scope.type)
+		        		var updateResponse=noteService.update($scope.type);
+		        		updateResponse.then(function(response){
+		        			console.log(response);
+		        			getNotes();	
+		        		},
+		        		function(response){
+		        			console.log(response);
+		        		});
+//		        		
+			        }
+			    });
+	};
+		    
+		    
+		    
+		    
 	
-	
-	//for expanding 
+	// for expanding
 	$scope.showTitle=false;
 	$scope.expandDiv=function(){
 		$scope.showTitle=true;
@@ -110,7 +183,7 @@ todo.controller('noteController',function($scope,noteService,$location){
 	
 		
 	
-	//for list and grid view
+	// for list and grid view
 	$scope.view="true";
 
 	$scope.flex="30";
@@ -128,7 +201,7 @@ todo.controller('noteController',function($scope,noteService,$location){
 		
 	}
 	
-	//for color-picker
+	// for color-picker
 		$scope.options = ['transparent','#FF8A80', '#FFD180', '#FFFF8D', '#CFD8DC', '#80D8FF', '#A7FFEB', '#CCFF90'];
 	    $scope.color = '#FF8A80';
 
@@ -140,5 +213,12 @@ todo.controller('noteController',function($scope,noteService,$location){
 	    	});
 	    }
 	
-	
+	//toggle navbar
+	    $scope.showNav=true;
+	    $scope.hideNav=function(){
+	    	$scope.showNav=!$scope.showNav;
+	    	}	    
+	    
+	    
+	    
 });

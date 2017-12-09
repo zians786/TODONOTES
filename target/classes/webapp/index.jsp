@@ -25,6 +25,7 @@
       <script src = "bower_components/angular-aria/angular-aria.min.js"></script>
       <script src = "bower_components/angular-messages/angular-messages.min.js"></script>
       <script src="bower_components/angular-material/angular-material.min.js"></script> 
+        <script src="bower_components/ng-file-upload/ng-file-upload.js"></script> 
 
  <!-- CSS -->
 <link rel="stylesheet" type="text/css" href="css/Mycss.css"> 

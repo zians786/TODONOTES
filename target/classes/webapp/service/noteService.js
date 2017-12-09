@@ -37,6 +37,18 @@ ToDo.factory('noteService',function($http,$location){
 		
 	}
 	
+	
+	userNote.update=function(note){
+		
+		return $http({
+			method:"POST",
+			url:"notes/update",
+			data:note,
+			headers: {	'accToken':localStorage.getItem('token')		
+			}
+		});
+	}
+	
 	userNote.trash=function(note){
 		return $http({
 			method:"POST",
@@ -68,6 +80,9 @@ ToDo.factory('noteService',function($http,$location){
 				}
 			});
 	}
+	
+	
+	
 
 	return userNote;
 });

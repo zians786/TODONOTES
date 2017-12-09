@@ -54,7 +54,7 @@ public class NoteDaoImp implements NoteDao{
 	}
 
 	public List<Note> read(User user) {
-		Query query=getSession().createQuery("from Note where userId='"+user.getUserId()+"' and inTrash=false and isArchived=false");
+		Query query=getSession().createQuery("from Note where userId='"+user.getUserId()+"'");
 		List<Note> note1= query.list();
 		return note1;
 		

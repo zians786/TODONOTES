@@ -44,6 +44,7 @@ public class NoteServiceImp implements NoteService {
 		Note note1=noteDao.read(note);
 		note1.setTitle(note.getTitle());
 		note1.setDescription(note.getDescription());
+		note1.setImage(note.getImage());
 		Date date=new Date();
 		note1.setModifiedDate(date);
 		

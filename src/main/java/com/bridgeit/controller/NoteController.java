@@ -66,16 +66,18 @@ public class NoteController {
 	}
 
 	@RequestMapping(value = "notes/update", method = RequestMethod.POST)
-	public ResponseEntity<String> update(@RequestBody Note note, HttpServletRequest request) {
+	public ResponseEntity<UserResponse> update(@RequestBody Note note, HttpServletRequest request) {
 
 		String token = jwtObject.jwtVerify(request.getHeader("accToken"));
-
+		UserResponse message=new UserResponse();
 		if (token != null) {
 			noteService.updateNote(note, token);
-			return new ResponseEntity<String>("Note Updated Successfully.", HttpStatus.OK);
+			message.setMessage("Note Updated Successfully.");
+			return new ResponseEntity<UserResponse>(message, HttpStatus.OK);
 
 		} else {
-			return new ResponseEntity<String>("Invalid Token", HttpStatus.CONFLICT);
+			message.setMessage("Invalid Token");
+			return new ResponseEntity<UserResponse>(message, HttpStatus.CONFLICT);
 		}
 
 	}
