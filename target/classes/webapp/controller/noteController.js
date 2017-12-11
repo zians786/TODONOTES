@@ -219,6 +219,19 @@ todo.controller('noteController',function($scope,noteService,$location,$mdDialog
 	    	$scope.showNav=!$scope.showNav;
 	    	}	    
 	    
+	//for getting all archived notes
+	    $scope.archivedNotes=function(){
+	    	$location.path('archive');
+	    }
 	    
+	//for getting all trash notes
+	    $scope.trashNotes=function(){
+	    	$location.path('trash');
+	    }
+	    
+	//for home notes
+	    $scope.home=function(){
+	    	$location.path('home');
+	    }
 	    
 });

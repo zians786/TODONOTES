@@ -39,10 +39,23 @@ todo.config([ '$stateProvider', '$urlRouterProvider',
 				controller:'noteController'
 				});
 			
-			$stateProvider.state('social/dummy',{
+			$stateProvider.state('archive',{
+				url:'/archive',
+				templateUrl :'template/archive.html',
+				controller:'noteController'
+			});
+			
+
+			$stateProvider.state('trash',{
+				url:'/trash',
+				templateUrl :'template/trash.html',
+				controller:'noteController'
+			});
+			
+			$stateProvider.state('dummy',{
 				url:'/dummy',
 				templateUrl :'template/dummy.html',
-				
+				controller:'dummyController'
 			});
 			
 			$urlRouterProvider.otherwise('login');

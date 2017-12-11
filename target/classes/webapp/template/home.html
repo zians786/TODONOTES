@@ -1,6 +1,8 @@
 
 <!-- Angular Material Dependencies-->
-<div layout="column" ng-cloak>
+
+<side-nav></side-nav>
+<!-- <div layout="column" ng-cloak>
 
 	<md-toolbar layout="row" layout-align="start center">
 
@@ -40,30 +42,14 @@
 	</div>
 	</md-toolbar>
 </div>
-
+ -->
 
 
 <div class="container" layout="row">
-	<div ng-show="showNav" flex="15">
-
-
-		<md-sidenav md-is-locked-open="true" class="md-whiteframe-4dp">
-		<md-list> <md-list-item> <md-button
-			aria-label="Notes" flex> <md-icon></md-icon> <span>Notes</span>
-		</md-button> </md-list-item> <md-list-item> <md-button aria-label="Reminder" flex>
-		<md-icon></md-icon> <span>Reminder</span> </md-button> </md-list-item> </md-list> <md-divider></md-divider>
-
-		<md-list> <md-list-item> <md-button
-			aria-label="" flex> <md-icon></md-icon> <span>Create
-			new label</span> </md-button> </md-list-item> </md-list> <md-divider></md-divider> <md-list> <md-list-item>
-		<md-button aria-label="Archive" flex> <md-icon></md-icon>
-		<span>Archive</span> </md-button> </md-list-item> <md-list-item> <md-button
-			aria-label="Trash" flex> <md-icon></md-icon> <span>Trash</span>
-		</md-button> </md-list-item> </md-list> </md-sidenav>
-
-	</div>
-
-
+	
+	
+ <nav-bar></nav-bar>
+ 
 	<div flex="10"></div>
 
 	<div flex="65" layout="column" layout-align="center center">

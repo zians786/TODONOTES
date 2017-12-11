@@ -26,5 +26,14 @@ ToDo.factory('loginService',function($http,$location){
 		
 	}
 
+	
+	
+	login.socialLogin=function(){
+		return $http({
+			method:"POST",
+			url:'getToken'
+		});
+	}
+	
 	return login;
 });

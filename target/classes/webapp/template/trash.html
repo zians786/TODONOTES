@@ -1,0 +1,64 @@
+	<side-nav></side-nav>
+	<div class="container" layout="row">
+	
+	
+ <nav-bar></nav-bar>
+	
+	<div layout="row" layout-align="center center" layout-wrap>
+			<div ng-repeat="note in readNotes | filter:{inTrash:true} " flex={{flex}}>
+
+				<md-card ng-mouseenter="mouse=true" ng-mouseleave="mouse=false"
+					style="background-color:{{note.color}};">
+				<div ng-click=showDialog(note)>
+				
+					<div ng-if="note.image"><img ng-src={{note.image}} style=" max-width: 100%;"></div>
+					<md-card-title>
+					<div style="overflow-wrap: break-word;contenteditable="
+						false" class="md-headline">{{note.title}}</div>
+					</md-card-title>
+					<md-card-content>
+
+					<div style="overflow-wrap: break-word;" contenteditable="false"
+						aria-multiline="true" role="textbox">{{note.description}}</div>
+					</md-card-content>
+				</div>
+				<md-card-content>
+				<div ng-show="mouse" layout="row" layout-align="space-around center"
+					role="toolbar">
+
+					<div role="button" aria-label="Remind me">
+						<md-icon md-svg-icon="img/icons/remind.svg"></md-icon>
+					</div>
+					<div role="button" aria-label="Collaborator">
+						<md-icon md-svg-icon="img/icons/collaborate.svg"></md-icon>
+					</div>
+					<color-picker color="color" options="options"
+						on-color-changed="colorChanged(newColor,note)"></color-picker>
+					
+					<div ng-click="uploadImage(note)" role="button" aria-label="Add image">
+					<input ng-show="false" id="image" type='file' ng-model-instant ng-model="file" onchange="angular.element(this).scope().imageUpload(this)" />
+					
+						<md-icon md-svg-icon="img/icons/image.svg"></md-icon>
+					</div>
+	
+					<div role="button" ng-click="archive(note)" aria-label="Archive">
+						<md-icon md-svg-icon="img/icons/archive.svg"></md-icon>
+					</div>
+
+
+					<md-menu-bar> <md-menu>
+
+					<div role="button" aria-label="More" ng-click="$mdMenu.open()">
+						<md-icon md-svg-icon="img/icons/more.svg"></md-icon>
+					</div>
+					<md-menu-content width="2" layout="column"> <md-menu-item>
+					<md-button ng-click="trash(note)">delete</md-button> </md-menu-item> <md-menu-item>
+					<md-button ng-click="label()">label</md-button> </md-menu-item> </md-menu-content> </md-menu> </md-menu-bar>
+
+
+				</div>
+
+				</md-card-content> </md-card>
+			</div>
+		</div>
+</div>

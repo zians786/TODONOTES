@@ -48,7 +48,7 @@
 
  <script src="controller/registerController.js"></script>
   <script src="controller/resetController.js"></script>
- 
+   <script src="controller/dummyController.js"></script>
 
  <!-- SERVICES -->
 <script src="service/loginService.js"></script>
@@ -58,6 +58,8 @@
 <!-- DIRECTIVE -->
 <script src="directive/allDirective.js"></script>
 <script src="directive/color-picker.js"></script>
+<script src="directive/navbar.js"></script>
+<script src="directive/sideNav.js"></script>
 </head>
 
 

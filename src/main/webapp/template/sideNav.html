@@ -1,0 +1,40 @@
+<div layout="column" ng-cloak>
+
+	<md-toolbar layout="row" layout-align="start center">
+
+	<div class="md-toolbar-tools" style="background-color: #fb0;">
+
+		<md-button ng-click="hideNav()" class="md-icon-button"
+			aria-label="Menu"> <md-icon
+			md-svg-icon="img/icons/menu.svg"></md-icon> </md-button>
+
+		<h4 style="color: black;">Google Keep</h4>
+		<div flex="5"></div>
+		<md-button class="md-icon-button" aria-label="Search"> <md-icon
+			md-svg-icon="img/icons/search.svg"></md-icon> </md-button>
+
+		<div flex="40">
+			<md-autocomplete md-no-cache="true" md-selected-item="selectedItem"
+				md-items="item in items" md-search-text="searchText"
+				md-item-text="item.display" placeholder="Search here">
+		</div>
+
+		<div flex="10"></div>
+		<md-button ng-click="changeView()" ng-show="view"
+			class="md-icon-button" aria-label="list"> <md-icon
+			md-svg-icon="img/icons/list.svg"></md-icon> </md-button>
+
+		<md-button ng-click="changeView()" ng-hide="view"
+			class="md-icon-button" aria-label="grid"> <md-icon
+			md-svg-icon="img/icons/grid.svg"></md-icon> </md-button>
+
+
+		<md-menu-bar> <md-menu> <md-button
+			class="md-icon-button" aria-label="profile" ng-click="$mdMenu.open()">
+		<md-icon md-svg-icon="img/icons/profile.svg"></md-icon></md-button> <md-menu-content>
+		<md-menu-item class="md-indent"> <md-button
+			ng-click="logout()">logout</md-button> </md-menu-item> </md-menu-content> </md-menu> </md-menu-bar>
+
+	</div>
+	</md-toolbar>
+</div>
