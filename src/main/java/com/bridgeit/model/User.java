@@ -24,9 +24,12 @@ public class User {
 	private String userName;
 	private String password;
 	Boolean active=false;
-	
+	private String profilePicture; 
 
 	
+	
+
+
 	public int getUserId() {
 		return userId;
 	}
@@ -73,5 +76,12 @@ public class User {
 		this.email = email;
 	}
 	
-	
+	public String getProfilePicture() {
+		return profilePicture;
+	}
+
+
+	public void setProfilePicture(String profilePicture) {
+		this.profilePicture = profilePicture;
+	}
 }

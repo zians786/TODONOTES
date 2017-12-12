@@ -131,16 +131,17 @@ public class NoteController {
 	}
 	
 	@RequestMapping(value = "notes/pin", method = RequestMethod.POST)
-	public ResponseEntity<String> pin(@RequestBody Note note, HttpServletRequest request) {
+	public ResponseEntity<UserResponse> pin(@RequestBody Note note, HttpServletRequest request) {
 		int userId = jwtObject.jwtVerifyToken(request.getHeader("accToken"));
-
+		UserResponse message=new UserResponse();
 		if (userId != 0) {
 			 noteService.pinNote(note, userId);
-			return new ResponseEntity<String>("success", HttpStatus.OK);
+			 message.setMessage("Pinned Successfull");
+			return new ResponseEntity<UserResponse>(message, HttpStatus.OK);
 
 		} else {
-		
-			return new ResponseEntity<String>("Discarded", HttpStatus.CONFLICT);
+			message.setMessage("Invalid Token");
+			return new ResponseEntity<UserResponse>(message, HttpStatus.CONFLICT);
 		}
 	}
 	

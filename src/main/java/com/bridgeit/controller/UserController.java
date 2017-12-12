@@ -50,13 +50,16 @@ public class UserController {
 	}
 
 	@RequestMapping(value = { "/login" }, method = RequestMethod.POST)
-	public ResponseEntity<UserResponse> login(@RequestBody User user, HttpServletRequest request) {
+	public ResponseEntity<UserResponse> login(@RequestBody User user) {
 		UserResponse response = new UserResponse();
 		String token = service.loginValidate(user);
 		if (token != null) {
-
-			HttpSession session = request.getSession();
-			response.setMessage("Welcome " + user.getUserName());
+			
+			User userInfo=service.getUser(user.getUserName());
+			response.setMessage("Welcome " + userInfo.getUserName());
+			response.setEmail(userInfo.getEmail());
+			response.setProfilePicture(userInfo.getProfilePicture());
+			response.setUserName(userInfo.getUserName());
 			response.setToken(token);
 			return new ResponseEntity<UserResponse>(response, HttpStatus.OK);
 

@@ -89,4 +89,11 @@ public class UserDaoImp implements UserDao {
 		query.executeUpdate();
 	}
 
+	@Override
+	public User getUserByUserName(String userName) {
+	Query query=getSession().createQuery("from User where userName='"+userName+"'");
+	User user=(User) query.uniqueResult();
+		return user;
+	}
+
 }

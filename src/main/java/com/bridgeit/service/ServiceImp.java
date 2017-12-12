@@ -121,9 +121,10 @@ public class ServiceImp implements Service {
 		if (user == null) {
 
 			User user2 = new User();
-
+			System.out.println(profile.get("picture").get("data").get("url"));
 			user2.setUserName(profile.get("name").asText());
 			user2.setEmail(profile.get("email").asText());
+			user2.setProfilePicture(profile.get("picture").get("data").get("url").asText());
 			user2.setActive(true);
 			userDao.registerUser(user2);
 			int userId = userDao.getUserId(user2.getUserName());
@@ -135,6 +136,12 @@ public class ServiceImp implements Service {
 			return token;
 		}
 
+	}
+
+	@Override
+	public User getUser(String userName) {
+		
+		return userDao.getUserByUserName(userName);
 	}
 
 

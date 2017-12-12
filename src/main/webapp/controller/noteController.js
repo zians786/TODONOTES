@@ -1,8 +1,14 @@
 var todo=angular.module("TODO");
 todo.controller('noteController',function($scope,noteService,$location,$mdDialog){
 
-
 	// for fetching all the User notes
+	$scope.user={};
+	$scope.user.userName=localStorage.getItem('userName');
+	$scope.user.email=localStorage.getItem('email');
+	$scope.user.picture=localStorage.getItem('picture');
+	
+	console.log($scope.user);
+	
 	var read=noteService.read();
 	read.then(function(response){
 		console.log(response.data);
@@ -53,12 +59,47 @@ todo.controller('noteController',function($scope,noteService,$location,$mdDialog
 	}
 	
 	
+	// for restore from trash
+	$scope.restore=function(note){
+		console.log(note);
+		var trashNote=noteService.trash(note);
+		trashNote.then(function(response){
+			console.log("note unTrashed..");
+			getNotes();
+		});
+	}
+	
 	// for archived
 	$scope.archive=function(note){
 		console.log(note);
 		var archiveNote=noteService.archive(note);
 		archiveNote.then(function(response){
 			console.log("note Trashed..");
+			getNotes();
+		});
+	}
+	
+	
+
+	// for pin
+	    $scope.pin=function(note){
+			console.log(note);
+			var pinResp=noteService.pin(note);
+				pinResp.then(function(response){
+				console.log("note Pinned..");
+				getNotes();
+			});
+		}
+		    
+	
+	
+	
+	// for unArchived
+	$scope.unArchive=function(note){
+		console.log(note);
+		var archiveNote=noteService.archive(note);
+		archiveNote.then(function(response){
+			console.log("note unArchived..");
 			getNotes();
 		});
 	}
@@ -212,6 +253,9 @@ todo.controller('noteController',function($scope,noteService,$location,$mdDialog
 	    		console.log(response.data);
 	    	});
 	    }
+	    
+	    
+	    
 	
 	//toggle navbar
 	    $scope.showNav=true;

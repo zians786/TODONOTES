@@ -18,5 +18,6 @@ public interface Service {
 	
 	String registerSocialAccountUser(JsonNode profile);
 	
+	User getUser(String userName);
 	
 }

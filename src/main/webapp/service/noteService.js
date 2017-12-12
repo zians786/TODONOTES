@@ -3,6 +3,9 @@ var ToDo = angular.module('TODO');
 ToDo.factory('noteService',function($http,$location){
 	var userNote ={};
 	
+	
+	userNote.user={};
+	
 	userNote.add = function(note){
 	
 		return $http({
@@ -48,6 +51,19 @@ ToDo.factory('noteService',function($http,$location){
 			}
 		});
 	}
+	
+	
+	userNote.pin=function(note){
+		return $http({
+			method:"POST",
+			url:"notes/pin",
+			data:note,
+			headers: {'accToken': localStorage.getItem('token')
+			}
+		});
+	}
+	
+	
 	
 	userNote.trash=function(note){
 		return $http({

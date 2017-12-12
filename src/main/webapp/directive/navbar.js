@@ -1,10 +1,6 @@
-/**
- * 
- */
-
 var todo=angular.module('TODO');
-todo.directive('navBar',function(){
+todo.directive('sideNav',function(){
 	return{
-		templateUrl:'template/navBar.html'
+		templateUrl:'template/sideNav.html'
 	};
 });

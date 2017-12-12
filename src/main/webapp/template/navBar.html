@@ -1,18 +1,53 @@
-  <div ng-show="showNav" flex="15">
+
+	
+	<div layout="column" ng-cloak>
+
+	<md-toolbar layout="row" layout-align="start center">
+
+	<div class="md-toolbar-tools" style="background-color: #fb0;">
+
+		<md-button ng-click="hideNav()" class="md-icon-button"
+			aria-label="Menu"> <md-icon
+			md-svg-icon="img/icons/menu.svg"></md-icon> </md-button>
+
+		<h4 style="color: black;">Google Keep</h4>
+		<div flex="5"></div>
+		<md-button class="md-icon-button" aria-label="Search"> <md-icon
+			md-svg-icon="img/icons/search.svg"></md-icon> </md-button>
+
+		<div flex="40">
+			<md-autocomplete md-no-cache="true" md-selected-item="selectedItem"
+				md-items="item in items" md-search-text="searchText"
+				md-item-text="item.display" placeholder="Search here">
+		</div>
+
+		<div flex="10"></div>
+	
+		<md-button ng-click="changeView()" ng-show="view"
+			class="md-icon-button" aria-label="list"> <md-icon
+			md-svg-icon="img/icons/list.svg"></md-icon> </md-button>
+
+		<md-button ng-click="changeView()" ng-hide="view"
+			class="md-icon-button" aria-label="grid"> <md-icon
+			md-svg-icon="img/icons/grid.svg"></md-icon> </md-button>
 
 
-		<md-sidenav md-is-locked-open="true" class="md-whiteframe-4dp" >
-		<md-list> <md-list-item> <md-button ng-click="home()"
-			aria-label="Notes" flex> <md-icon></md-icon> <span>Notes</span>
-		</md-button> </md-list-item> <md-list-item> <md-button aria-label="Reminder" flex>
-		<md-icon></md-icon> <span>Reminder</span> </md-button> </md-list-item> </md-list> <md-divider></md-divider>
-
-		<md-list> <md-list-item> <md-button
-			aria-label="" flex> <md-icon></md-icon> <span>Create
-			new label</span> </md-button> </md-list-item> </md-list> <md-divider></md-divider> <md-list> <md-list-item>
-		<md-button  ng-click="archivedNotes()" aria-label="Archive" flex> <md-icon></md-icon>
-		<span>Archive</span> </md-button> </md-list-item> <md-list-item> 
-		<md-button ng-click="trashNotes()"	aria-label="Trash" flex> <md-icon></md-icon> <span>Trash</span>
-		</md-button> </md-list-item> </md-list> </md-sidenav>
-
-	</div>
+		<md-menu-bar> <md-menu> <img ng-src={{user.picture}} style="border-radius:45px; max-width: 100%;" aria-label="profile" ng-click="$mdMenu.open()">
+	 <md-menu-content>
+		<div layout="row" layout-align="space-around center">
+		<img ng-src={{user.picture}} style="border-radius:45px; max-width: 100%;">
+		<div layout="column" layout-align="space-around center">
+		<div>{{user.userName}}</div><br>
+		<div>{{user.email}}</div><br>
+		</div>
+		</div>	
+			
+			<md-divider></md-divider>
+		<md-button ng-click="logout()"> Sign out </md-button>
+		
+		 </md-menu-content> </md-menu> </md-menu-bar>
+<!-- <md-button ng-click="logout()"> {{user.userName}} logout </md-button>
+ -->	</div>
+	</md-toolbar>
+</div>
+	

@@ -1,8 +1,8 @@
-		<side-nav></side-nav>
+ <nav-bar></nav-bar>		
 	<div class="container" layout="row">
 	
 	
- <nav-bar></nav-bar>
+<side-nav></side-nav>
 	
 	<div layout="row" layout-align="center center" layout-wrap>	<div layout="row" layout-align="center center" layout-wrap>
 			<div ng-repeat="note in readNotes | filter:{archived:true} " flex={{flex}}>
@@ -41,7 +41,7 @@
 						<md-icon md-svg-icon="img/icons/image.svg"></md-icon>
 					</div>
 	
-					<div role="button" ng-click="archive(note)" aria-label="Archive">
+					<div role="button" ng-click="unArchive(note)" aria-label="unArchive">
 						<md-icon md-svg-icon="img/icons/archive.svg"></md-icon>
 					</div>
 

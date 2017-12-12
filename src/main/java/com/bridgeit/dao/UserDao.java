@@ -12,4 +12,6 @@ public interface UserDao {
 	void resetPassword(int userId, User user);
 	int getUserId(String userName);
 	User getUserByEmailId(String email);
+	User getUserByUserName(String userName);
+	
 }
