@@ -3,6 +3,19 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1"><!--  -->
+
+<!-- CSS -->
+  <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
+  
+	<link rel="stylesheet" href="bower_components/ng-tags-input/ng-tags-input.css" />
+		<link rel="stylesheet" href="bower_components/angular-material-datetimepicker/css/material-datetimepicker.css" />
+	
+<link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.css" />
+<link rel="stylesheet" type="text/css" href="css/Mycss.css"> 
+    
+
+
+
 <script
 	src="bower_components/angular/angular.js"></script>
 	
@@ -20,15 +33,17 @@
 
 
 
-	  <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
-      <script src = "bower_components/angular-animate/angular-animate.min.js"></script>
+	  <script src = "bower_components/angular-animate/angular-animate.min.js"></script>
       <script src = "bower_components/angular-aria/angular-aria.min.js"></script>
       <script src = "bower_components/angular-messages/angular-messages.min.js"></script>
       <script src="bower_components/angular-material/angular-material.min.js"></script> 
-        <script src="bower_components/ng-file-upload/ng-file-upload.js"></script> 
-
- <!-- CSS -->
-<link rel="stylesheet" type="text/css" href="css/Mycss.css"> 
+      <script src="bower_components/ng-file-upload/ng-file-upload.js"></script> 
+      <script src="bower_components/angular-material-datetimepicker/js/angular-material-datetimepicker.js"></script> 
+	
+      <script src="bower_components/moment/moment.js"></script>
+		<script src="bower_components/ng-tags-input/ng-tags-input.js"></script>
+		<script src="bower_components/angular-toastr/dist/angular-toastr.js"></script>
+		<script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script> 													
 <!-- <link rel="stylesheet" type="text/css" href="css/login.css">
  -->
 <!-- JAVASCRIPT 

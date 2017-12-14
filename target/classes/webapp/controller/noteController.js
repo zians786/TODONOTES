@@ -1,19 +1,45 @@
 var todo=angular.module("TODO");
-todo.controller('noteController',function($scope,noteService,$location,$mdDialog){
+todo.controller('noteController',function(toastr,$scope,noteService,$location,$mdDialog,$mdToast,$interval,$filter){
 
-	// for fetching all the User notes
+	
+	
 	$scope.user={};
 	$scope.user.userName=localStorage.getItem('userName');
 	$scope.user.email=localStorage.getItem('email');
 	$scope.user.picture=localStorage.getItem('picture');
 	
 	console.log($scope.user);
-	
+
+
+    // for Notification using toastr
+    var reminderCheck=function(note){
+    	
+    	$interval(function(){
+    		for(var i=0;i<note.length;i++){
+    			if(note[i].reminder){
+    				var date=new Date(note[i].reminder);
+    				var currentDate=new Date();
+    			
+	            	if (((date.getTime()-10)<currentDate.getTime())&&(date.getTime()+10)>currentDate.getTime()) {
+	            		console.log(note[i]);
+	            		 toastr.success(note[i].title, note[i].description,{
+	                		 closeButton: true	
+	                	 });
+	            		 note[i].reminder="";
+	            		 noteService.update(note[i]);
+	            	}	
+    			}	
+    
+    		}	
+    });
+    }
+	// for fetching all the User notes
 	var read=noteService.read();
 	read.then(function(response){
 		console.log(response.data);
 		$scope.readNotes=response.data;
-},function(response){
+		  reminderCheck($scope.readNotes);
+		  },function(response){
 		if(response.status==409)
 			{
 				$scope.error=response.data.responseMessage;
@@ -24,17 +50,19 @@ todo.controller('noteController',function($scope,noteService,$location,$mdDialog
 				$scope.error="Enter valid data";
 			}
 	});
-	
-	
+
+  
 	// funtion to be called after any operation on notes
 	var getNotes=function(){
 	var read=noteService.read();
 	read.then(function(response){
 		console.log(response.data);
 		$scope.readNotes=response.data;
+		 reminderCheck($scope.readNotes);
 });
 	}
 	
+
 	
 	// for deleting notes
 	$scope.delete=function(note){
@@ -162,7 +190,7 @@ todo.controller('noteController',function($scope,noteService,$location,$mdDialog
 		      
 		    };
 
-	//for uploading image
+	// for uploading image
 		    $scope.uploadImage = function(type) {
 				$scope.type = type;
 				$('#image').trigger('click');
@@ -196,8 +224,8 @@ todo.controller('noteController',function($scope,noteService,$location,$mdDialog
 			        else{
 			        	
 		        		$scope.type.image=imageSrc;
-//		        		console.log(e.target.result);
-//		        		console.log(imageSrc);
+// console.log(e.target.result);
+// console.log(imageSrc);
 		        		console.log($scope.type)
 		        		var updateResponse=noteService.update($scope.type);
 		        		updateResponse.then(function(response){
@@ -254,28 +282,52 @@ todo.controller('noteController',function($scope,noteService,$location,$mdDialog
 	    	});
 	    }
 	    
-	    
+	
 	    
 	
-	//toggle navbar
+	// for checking reminder
+	    
+	    
+	// toggle navbar
 	    $scope.showNav=true;
 	    $scope.hideNav=function(){
 	    	$scope.showNav=!$scope.showNav;
 	    	}	    
 	    
-	//for getting all archived notes
+	// for getting all archived notes
 	    $scope.archivedNotes=function(){
 	    	$location.path('archive');
 	    }
 	    
-	//for getting all trash notes
+	// for getting all trash notes
 	    $scope.trashNotes=function(){
 	    	$location.path('trash');
 	    }
+	  
 	    
-	//for home notes
+	// for home notes
 	    $scope.home=function(){
 	    	$location.path('home');
 	    }
 	    
+	    
+	 // for setting reminder
+	    $scope.reminder=function(note,remind){
+	    	note.reminder=remind;
+	    	console.log(note.reminder);
+	    	var date=Date.parse(note.reminder);
+	    	note.reminder=date;
+	    	console.log(note);
+	    	var updateResponse=noteService.update(note);
+	    	updateResponse.then(function(response){
+	    		getNotes();
+	    	});
+	    
+	    }    
+	
+	
+
+
+	    
+ 
 });

@@ -98,6 +98,16 @@ ToDo.factory('noteService',function($http,$location){
 	}
 	
 	
+	userNote.reminder=function(note){
+		return $http({
+			method:"POST",
+			url:"notes/reminder",
+			data:note,
+			headers: {'accToken': localStorage.getItem('token')
+			}
+		});
+}
+	
 	
 
 	return userNote;

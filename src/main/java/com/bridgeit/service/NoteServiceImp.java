@@ -41,18 +41,19 @@ public class NoteServiceImp implements NoteService {
 	public void updateNote(Note note, String token) {
 		int userId = Integer.parseInt(token);
 		
-		Note note1=noteDao.read(note);
+		/*Note note1=noteDao.read(note);
 		note1.setTitle(note.getTitle());
 		note1.setDescription(note.getDescription());
 		note1.setImage(note.getImage());
 		Date date=new Date();
-		note1.setModifiedDate(date);
+		note1.setModifiedDate(date);*/
+		User user = new User();
+		user.setUserId(userId);
+		note.setUser(user);
+		Date date=new Date();
 		
-//		User user = new User();
-//		user.setUserId(userId);
-//		note.setUser(user);
-//		note.setModifiedDate(new Date());
-		noteDao.update(note1);
+		note.setModifiedDate(date);
+		noteDao.update(note);
 
 	}
 

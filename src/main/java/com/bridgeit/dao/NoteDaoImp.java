@@ -116,7 +116,7 @@ public class NoteDaoImp implements NoteDao{
 
 	@Override
 	public void remind(Note note, int userId) {
-		Query query=getSession().createQuery("update User set reminder='"+note.getReminder()+"' where noteId='"+note.getNoteId()+"' and userId='"+userId+"'");
+		Query query=getSession().createQuery("update Note set reminder='"+note.getReminder()+"' where noteId='"+note.getNoteId()+"' and userId='"+userId+"'");
 		query.executeUpdate();
 	}
 

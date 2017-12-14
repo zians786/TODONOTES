@@ -2,47 +2,6 @@
 <!-- Angular Material Dependencies-->
 <nav-bar></nav-bar>
 
-<!-- <div layout="column" ng-cloak>
-
-	<md-toolbar layout="row" layout-align="start center">
-
-	<div class="md-toolbar-tools" style="background-color: #fb0;">
-
-		<md-button ng-click="hideNav()" class="md-icon-button"
-			aria-label="Menu"> <md-icon
-			md-svg-icon="img/icons/menu.svg"></md-icon> </md-button>
-
-		<h4 style="color: black;">Google Keep</h4>
-		<div flex="5"></div>
-		<md-button class="md-icon-button" aria-label="Search"> <md-icon
-			md-svg-icon="img/icons/search.svg"></md-icon> </md-button>
-
-		<div flex="40">
-			<md-autocomplete md-no-cache="true" md-selected-item="selectedItem"
-				md-items="item in items" md-search-text="searchText"
-				md-item-text="item.display" placeholder="Search here">
-		</div>
-
-		<div flex="10"></div>
-		<md-button ng-click="changeView()" ng-show="view"
-			class="md-icon-button" aria-label="list"> <md-icon
-			md-svg-icon="img/icons/list.svg"></md-icon> </md-button>
-
-		<md-button ng-click="changeView()" ng-hide="view"
-			class="md-icon-button" aria-label="grid"> <md-icon
-			md-svg-icon="img/icons/grid.svg"></md-icon> </md-button>
-
-
-		<md-menu-bar> <md-menu> <md-button
-			class="md-icon-button" aria-label="profile" ng-click="$mdMenu.open()">
-		<md-icon md-svg-icon="img/icons/profile.svg"></md-icon></md-button> <md-menu-content>
-		<md-menu-item class="md-indent"> <md-button
-			ng-click="logout()">logout</md-button> </md-menu-item> </md-menu-content> </md-menu> </md-menu-bar>
-
-	</div>
-	</md-toolbar>
-</div>
- -->
 
 
 <div class="container" layout="row">
@@ -50,10 +9,13 @@
 <side-nav></side-nav>	
  
  
-	<div flex="10"></div>
+	<div flex="5"></div>
 
 	<div flex="65" layout="column" layout-align="center center">
+	
+	
 		<md-content>
+	 
 
 		<div layout="row" layout-align="center center">
 			<md-card> <md-card-content>
@@ -93,15 +55,11 @@
 				<md-button ng-show="showTitle" ng-click="addNote()">Done</md-button>
 			</div>
 
-			<!-- 	<div role="button" class="iconProperty" aria-label="Remind me" aria-disabled="false" tabindex="0" style="user-select: none;">
 
-	<md-icon md-svg-icon="img/icons/remind.svg"></md-icon></div>
-	<md-button ng-show="showTitle" ng-click="addNote()">Done</md-button>
- --> </md-card-content> </md-card>
-			<!-- 
-<md-button ng-click=showDialog()>click
-</md-button>
- -->
+
+<!-- for Dialog Box -->
+
+
 			<div style="visibility: hidden">
 				<div class="md-dialog-container" id="myStaticDialog">
 					<md-dialog> <md-card> <md-card-content>
@@ -173,6 +131,7 @@
 				<div ng-show="mouse" layout="row" layout-align="space-around center"
 					role="toolbar">
 
+
 					<div role="button" aria-label="Remind me">
 						<md-icon md-svg-icon="img/icons/remind.svg"></md-icon>
 					</div>
@@ -232,15 +191,46 @@
 
 					<div style="overflow-wrap: break-word;" contenteditable="false"
 						aria-multiline="true" role="textbox">{{note.description}}</div>
+					
+							
 					</md-card-content>
-				</div>
+					
+					</div>
 				<md-card-content>
+				
+							<div ng-if="note.reminder"><br>
+				<span style="background-color:white;">{{ note.reminder | date :  "yyyy-MM-dd HH:mm:ss"}}
+				<md-icon ng-click="note.reminder='';updateNote(note)"  md-svg-icon="img/icons/cross.svg" style="height:16px;width:16px;min-height:16px;min-width:16px;"></md-icon></span>
+				</div>	
+		
+				
+				
+				
+				
 				<div ng-show="mouse" layout="row" layout-align="space-around center"
 					role="toolbar">
 
-					<div role="button" aria-label="Remind me">
+		<md-menu-bar> <md-menu>
+				<div role="button" ng-click="$mdMenu.open()">
+					 <md-icon md-svg-icon="img/icons/remind.svg"  aria-label="Remind me" >
+				</div>
+	 <md-menu-content>
+	 <div layout="column">
+		<!-- 	<input ng-model="remind" datetime-picker date-format="yyyy-MM-dd HH:mm:ss" close-on-select="false" /> --> 
+		<md-input-container>	
+		  <label>Select Date and Time</label>
+<input mdc-datetime-picker date="true" time="true" type="text" id="datetime"
+placeholder="Date" show-todays-date="" min-date="date" ng-model="remind"   class=" md-input" readonly="readonly">
+</md-input-container>
+
+
+				<md-button ng-click="reminder(note,remind)">save</md-button> 	
+		 </div></md-menu-content> </md-menu> </md-menu-bar>					
+
+
+		<!-- 			<div role="button" aria-label="Remind me">
 						<md-icon md-svg-icon="img/icons/remind.svg"></md-icon>
-					</div>
+					</div> -->
 					<div role="button" aria-label="Collaborator">
 						<md-icon md-svg-icon="img/icons/collaborate.svg"></md-icon>
 					</div>

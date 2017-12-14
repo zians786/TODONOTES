@@ -1,5 +1,5 @@
 var todo = angular.module('TODO', [ 'ui.router', 'ngSanitize', 'ngAnimate',
-		'ngMaterial','tb-color-picker','ngFileUpload']);
+		'ngMaterial','tb-color-picker','ngFileUpload','ngMaterialDatePicker','ngTagsInput','toastr']);
 
 todo.config([ '$stateProvider', '$urlRouterProvider',
 		function($stateProvider, $urlRouterProvider) {
