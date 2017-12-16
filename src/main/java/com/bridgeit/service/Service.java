@@ -20,4 +20,5 @@ public interface Service {
 	
 	User getUser(String userName);
 	
+	User getUserInfo(String token);
 }

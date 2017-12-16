@@ -4,8 +4,6 @@ ToDo.factory('noteService',function($http,$location){
 	var userNote ={};
 	
 	
-	userNote.user={};
-	
 	userNote.add = function(note){
 	
 		return $http({
@@ -106,9 +104,26 @@ ToDo.factory('noteService',function($http,$location){
 			headers: {'accToken': localStorage.getItem('token')
 			}
 		});
-}
+	}
+	
+	userNote.createLabel=function(labelId,noteId){
+		return $http({
+			method:"PUT",
+			url:"notes/label/"+labelId+'/note/'+noteId,
+			headers: {'accToken': localStorage.getItem('token')
+			}
+		});
+	}
 	
 	
+	userNote.deleteLabel=function(labelId,noteId){
+		return $http({
+			method:"DELETE",
+			url:"notes/label/"+labelId+'/note/'+noteId,
+			headers: {'accToken': localStorage.getItem('token')
+			}
+		});
+	}
 
 	return userNote;
 });

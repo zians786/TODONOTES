@@ -96,4 +96,11 @@ public class UserDaoImp implements UserDao {
 		return user;
 	}
 
+	@Override
+	public User getUserByUserId(int userId) {
+		Query query=getSession().createQuery("from User where userId='"+userId+"'");
+		User user=(User) query.uniqueResult();
+			return user;
+	}
+
 }

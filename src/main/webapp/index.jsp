@@ -70,6 +70,7 @@
  <script src="service/registerService.js"></script>
  <script src="service/resetService.js"></script>
  <script src="service/noteService.js"></script>
+  <script src="service/labelService.js"></script>
 <!-- DIRECTIVE -->
 <script src="directive/allDirective.js"></script>
 <script src="directive/color-picker.js"></script>

@@ -32,10 +32,10 @@
 			md-svg-icon="img/icons/grid.svg"></md-icon> </md-button>
 
 
-		<md-menu-bar> <md-menu> <img ng-src={{user.picture}} style="border-radius:45px; max-width: 100%;" aria-label="profile" ng-click="$mdMenu.open()">
+		<md-menu-bar> <md-menu> <img ng-src={{user.profilePicture}} style="border-radius:45px; max-width: 100%;" aria-label="profile" ng-click="$mdMenu.open()">
 	 <md-menu-content>
 		<div layout="row" layout-align="space-around center">
-		<img ng-src={{user.picture}} style="border-radius:45px; max-width: 100%;">
+		<img ng-src={{user.profilePicture}} style="border-radius:45px; max-width: 100%;">
 		<div layout="column" layout-align="space-around center">
 		<div>{{user.userName}}</div><br>
 		<div>{{user.email}}</div><br>

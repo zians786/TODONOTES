@@ -120,4 +120,13 @@ public class NoteDaoImp implements NoteDao{
 		query.executeUpdate();
 	}
 
+
+	@Override
+	public Note read(int noteId) {
+		Query query=getSession().createQuery("from Note where noteId='"+noteId+"'");
+		Note note1=(Note) query.uniqueResult();
+		return note1;
+	
+	}
+
 }

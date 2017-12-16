@@ -144,6 +144,12 @@ public class ServiceImp implements Service {
 		return userDao.getUserByUserName(userName);
 	}
 
+	@Override
+	public User getUserInfo(String token) {
+		int userId=jwt.jwtVerifyToken(token);
+		return userDao.getUserByUserId(userId);
+	}
+
 
 
 }

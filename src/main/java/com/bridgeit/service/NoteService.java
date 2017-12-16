@@ -16,7 +16,8 @@ public interface NoteService {
 		void pinNote(Note note,int userId);
 		void coloerNote(Note note,int userId);
 		void remindNote(Note note,int userId);
-		
+		void setLabel(int labelId,int noteId);
+		void deleteLabel(int labelId,int noteId);
 	}
 
 

@@ -13,5 +13,5 @@ public interface UserDao {
 	int getUserId(String userName);
 	User getUserByEmailId(String email);
 	User getUserByUserName(String userName);
-	
+	User getUserByUserId(int userId);
 }

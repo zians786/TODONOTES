@@ -1,13 +1,17 @@
 package com.bridgeit.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bridgeit.dao.LabelDao;
 import com.bridgeit.dao.NoteDao;
+import com.bridgeit.model.Label;
 import com.bridgeit.model.Note;
 import com.bridgeit.model.User;
 import com.bridgeit.utility.JWT;
@@ -19,6 +23,9 @@ public class NoteServiceImp implements NoteService {
 	@Autowired
 	NoteDao noteDao;
 
+	@Autowired
+	LabelDao labelDao;
+	
 	@Autowired
 	JWT jwtObject;
 
@@ -92,6 +99,25 @@ public class NoteServiceImp implements NoteService {
 	@Override
 	public void remindNote(Note note, int userId) {
 		noteDao.remind(note, userId);
+	}
+	
+	public void setLabel(int labelId,int noteId) {
+		Label label = labelDao.read(labelId);
+		Note note=noteDao.read(noteId);
+		Set set=note.getLabel();
+		set.add(label);
+		note.setLabel(set);
+		noteDao.update(note);
+	}
+
+	@Override
+	public void deleteLabel(int labelId, int noteId) {
+		Label label = labelDao.read(labelId);
+		Note note=noteDao.read(noteId);
+		Set set=note.getLabel();
+		set.remove(label);
+		note.setLabel(set);
+		noteDao.update(note);
 	}
 
 }

@@ -103,4 +103,13 @@ public class UserController {
 		message = "Logout Successfully...";
 		return new ResponseEntity<String>(message, HttpStatus.OK);
 	}
+	
+
+	@RequestMapping(value= {"/getUser"},method=RequestMethod.POST)
+	public ResponseEntity<User> getUserInfo(HttpServletRequest request){
+		String token = request.getHeader("accToken");
+		User user=service.getUserInfo(token);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
+		
+	}
 }

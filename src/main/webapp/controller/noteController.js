@@ -1,14 +1,18 @@
 var todo=angular.module("TODO");
-todo.controller('noteController',function(toastr,$scope,noteService,$location,$mdDialog,$mdToast,$interval,$filter){
+todo.controller('noteController',function(toastr,$scope,noteService,loginService,labelService,$location,$mdDialog,$mdToast,$interval,$filter){
 
 	
-	
-	$scope.user={};
-	$scope.user.userName=localStorage.getItem('userName');
-	$scope.user.email=localStorage.getItem('email');
-	$scope.user.picture=localStorage.getItem('picture');
-	
-	console.log($scope.user);
+	var getUserdetail=function(){
+		var userInfo=loginService.UserInfo();
+		userInfo.then(function(response){
+			$scope.user=response.data;
+			console.log($scope.user);
+		},function(response){
+			$location.path('login');
+		});
+	}
+	getUserdetail();
+
 
 
     // for Notification using toastr
@@ -51,6 +55,18 @@ todo.controller('noteController',function(toastr,$scope,noteService,$location,$m
 			}
 	});
 
+	
+	//for fetching all user labels
+	var getAllLabel=function(){
+	var getLabel=labelService.read();
+	getLabel.then(function(response){
+		$scope.readLabel=response.data;
+		console.log($scope.readLabel);
+	});
+	}
+	getAllLabel();
+	
+	
   
 	// funtion to be called after any operation on notes
 	var getNotes=function(){
@@ -179,6 +195,17 @@ todo.controller('noteController',function(toastr,$scope,noteService,$location,$m
 		      clickOutsideToClose:true
 			  });
 			}
+	
+    $scope.showLabelDialog=function(){
+    	$mdDialog.show({
+    		contentElement: '#myLabelDialog',
+    		parent: angular.element(document.body),
+    		clickOutsideToClose:true
+    	});
+    }
+
+	
+	
 	// for updating notes
 		    $scope.updateNote = function(note) {
 		    	console.log("inside dialog controller");
@@ -325,9 +352,77 @@ todo.controller('noteController',function(toastr,$scope,noteService,$location,$m
 	    
 	    }    
 	
-	
-
-
+	//Dialog for Label
+	/*    
+	    $scope.showLabelDialog=function(){
+	    	$mdDialog.show({
+	    		templateUrl:"template/labelDialog.html",
+	    		controller:'noteController',
+	    		parent: angular.element(document.body),
+	    		clickOutsideToClose:true
+	    	});
+	    }
+*/
 	    
- 
+	//Adding Label
+	    
+	    $scope.addLabel=function(label){
+	    	var addLabelResp=labelService.create(label);
+	    	addLabelResp.then(function(response){
+	    		console.log(response.data);
+	    		getAllLabel();
+	    		$scope.label.labelName="";
+	    	},function(response){
+	    		
+	    	});
+	    }
+	    
+	//deleting label
+	    $scope.deleteLabel=function(label){
+	    	var deleteLabelResp=labelService.delete(label);
+	    	deleteLabelResp.then(function(response){
+	    		console.log(response.data);
+	    		getAllLabel();
+	    	},function(response){
+	    		
+	    	});
+	    }
+	
+	//updating label    
+	    $scope.updateLabel=function(label){
+	    	var updateLabelResp=labelService.update(label);
+	    	updateLabelResp.then(function(response){
+	    		console.log(response.data);
+	    		getAllLabel();
+	    		 toastr.success("Success", "Label Updated to "+label.labelName);
+	    	},function(response){
+	    		
+	    	});
+	    }
+	    
+	    
+	    
+	//setting label to notes   
+	    $scope.addNoteLabel=function(labelId,noteId){
+	    var setLabelResp=noteService.createLabel(labelId,noteId);
+	    setLabelResp.then(function(response){
+	    	console.log(response.data);
+	    	getNotes();
+	    },function(response){
+	    	console.log(response.data);
+	    });
+	    
+	 }
+	 
+	// for deleting the label
+	    $scope.deleteNoteLabel=function(labelId,noteId){
+	    	var delLabelResp=noteService.deleteLabel(labelId,noteId);
+		    delLabelResp.then(function(response){
+		    	console.log(response.data);
+		    	getNotes();
+		    },function(response){
+		    	console.log(response.data);
+		    });
+	    }
+	    
 });

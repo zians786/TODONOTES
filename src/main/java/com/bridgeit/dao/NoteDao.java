@@ -10,6 +10,7 @@ public interface NoteDao {
  void create(Note note);
  void update(Note note);
  Note read(Note note);
+ Note read(int noteId);
  List<Note> read(User user);
  void delete(Note note);
  void archive(Note note,int userId);

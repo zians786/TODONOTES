@@ -35,5 +35,15 @@ ToDo.factory('loginService',function($http,$location){
 		});
 	}
 	
+	
+	login.UserInfo=function(){
+		return $http({
+			method:"POST",
+			url:'getUser',
+			headers: {'accToken': localStorage.getItem('token')
+			}
+		});
+	}
+	
 	return login;
 });

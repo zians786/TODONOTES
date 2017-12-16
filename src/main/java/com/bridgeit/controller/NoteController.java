@@ -92,8 +92,8 @@ public class NoteController {
 			return new ResponseEntity<List<Note>>(resultNote, HttpStatus.OK);
 
 		} else {
-			Note resultNote =null;
-			return null;
+			List<Note> resultNote =null;
+			return new ResponseEntity<List<Note>>(resultNote, HttpStatus.CONFLICT);
 		}
 
 	}
@@ -181,6 +181,43 @@ public class NoteController {
 
 		
 	}
-	
 
+	@RequestMapping(value = "notes/label/{labelId}/note/{noteId}", method = RequestMethod.PUT)
+	public ResponseEntity<UserResponse> setLabel(@PathVariable int labelId,@PathVariable int noteId, HttpServletRequest request) {
+
+		int userId = jwtObject.jwtVerifyToken(request.getHeader("accToken"));
+		UserResponse message=new UserResponse();
+		if (userId != 0) {
+			 noteService.setLabel(labelId, noteId);
+			 message.setMessage("Label changed");
+			return new ResponseEntity<UserResponse>(message, HttpStatus.OK);
+
+		} else {
+			message.setMessage("Invalid Token");
+			return new ResponseEntity<UserResponse>(message, HttpStatus.CONFLICT);
+		}
+
+		
+	}
+
+	
+	@RequestMapping(value = "notes/label/{labelId}/note/{noteId}", method = RequestMethod.DELETE)
+	public ResponseEntity<UserResponse> deleteLabel(@PathVariable int labelId,@PathVariable int noteId, HttpServletRequest request) {
+
+		int userId = jwtObject.jwtVerifyToken(request.getHeader("accToken"));
+		UserResponse message=new UserResponse();
+		if (userId != 0) {
+			 noteService.deleteLabel(labelId, noteId);
+			 message.setMessage("Label changed");
+			return new ResponseEntity<UserResponse>(message, HttpStatus.OK);
+
+		} else {
+			message.setMessage("Invalid Token");
+			return new ResponseEntity<UserResponse>(message, HttpStatus.CONFLICT);
+		}
+
+		
+	}
+
+	
 }
