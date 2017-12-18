@@ -117,4 +117,14 @@ public JsonNode getUserProfile(String fbaccessToken) {
 
 }
 
+
+	public String getSocialShareUrl(String title,String data) {
+		String facebookSocialShareURL = "";
+
+		facebookSocialShareURL = "https://www.facebook.com/dialog/feed?"  +"client_id=" + faceBookClientId +" &display=popup&amp;caption=An%20example%20caption"+"&link=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2F"+"&quote=Title: "+title+", Note: "+data+"&redirect_uri=http://localhost:8080/ToDoNotes/gohome";
+
+		return facebookSocialShareURL;
+	}
+	
+
 }

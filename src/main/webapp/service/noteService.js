@@ -124,6 +124,14 @@ ToDo.factory('noteService',function($http,$location){
 			}
 		});
 	}
+	
+	
+	userNote.shareOnFB=function(title,note){
+		return $http({
+			method:"GET",
+			url:"socialShare/title/"+title+"/data/"+note,
+		});
+	}
 
 	return userNote;
 });

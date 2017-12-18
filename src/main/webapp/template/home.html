@@ -2,16 +2,14 @@
 <!-- Angular Material Dependencies-->
 <nav-bar></nav-bar>
 
+<div layout="row" layout-align="center">
 
-
-<div class="container" layout="row">
-	
 <side-nav></side-nav>	
- 
- 
-	<div flex="5"></div>
 
-	<div flex="65" layout="column" layout-align="center center">
+<!-- <div class="container" layout="column" layout-align="center center">
+	 -->
+
+	<div flex="75" class="container" layout="column" layout-align="center center" >
 	
 	
 		<md-content>
@@ -293,24 +291,29 @@ placeholder="Date" show-todays-date="" min-date="date" ng-model="remind"   class
 					</div>
 					
 
-<!-- 					<md-menu-bar> <md-menu>
+ 					<md-menu-bar> <md-menu>
 
 					<div role="button" aria-label="More" ng-click="$mdMenu.open()">
 						<md-icon md-svg-icon="img/icons/more.svg"></md-icon>
 					</div>
 					<md-menu-content width="2" layout="column"> <md-menu-item>
-					<md-button ng-click="trash(note)">Delete</md-button> </md-menu-item> <md-menu-item>
-					<md-button ng-click="label()">Add label</md-button> </md-menu-item> </md-menu-content> </md-menu> </md-menu-bar>
+					<md-button ng-click="trash(note)">Delete</md-button> </md-menu-item>
+ 				
+					<md-menu-item>
+					<md-button  ng-click="socialShare(note)"> Share on fb</md-button> </md-menu-item>
+<!--
+ <md-menu-item> <md-button ng-click="label()">Add label</md-button> </md-menu-item> 
+ --> 
+ 
 
- -->
+				    <md-menu-item>
+					 <md-menu>
 
-				    
-					<md-menu-bar> <md-menu>
-
-					<div role="button" aria-label="More" ng-click="$mdMenu.open()">
+					<md-button ng-click="$mdMenu.open()">Add label</md-button>
+				<!-- 	<div role="button" aria-label="More" ng-click="$mdMenu.open()">Add Label
 						<md-icon md-svg-icon="img/icons/more.svg"></md-icon>
-					</div>
-					<md-menu-content width="3"> 
+					</div> -->
+					<md-menu-content width="4"> 
 					
 					<md-menu-item>
 						
@@ -323,12 +326,14 @@ placeholder="Date" show-todays-date="" min-date="date" ng-model="remind"   class
 						
 					 </md-menu-item>
 					
-					<md-menu-item ng-repeat="label in readLabel" > 
-					 <md-checkbox  ng-model="result" ng-click="addNoteLabel(label.labelId,note.noteId)" aria-label="Checkbox"><span>{{label.labelName}}</span>
+					<md-menu-item ng-repeat="label in readLabel" 	 > 
+					 <md-checkbox   ng-click="addNoteLabel(label.labelId,note.noteId)" aria-label="Checkbox"><span>{{label.labelName}}</span>
             			</md-checkbox></md-menu-item>
             
              
      
+             </md-menu-content> </md-menu> </md-menu-item>
+             
              </md-menu-content> </md-menu> </md-menu-bar>
 
 				</div>

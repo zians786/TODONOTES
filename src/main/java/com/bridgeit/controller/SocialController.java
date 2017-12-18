@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -131,6 +132,18 @@ public class SocialController {
 			message.setMessage(accToken);
 			return new ResponseEntity<UserResponse>(message, HttpStatus.OK);
 		}
+	
+	@RequestMapping(value="/socialShare/title/{title}/data/{data}",method=RequestMethod.GET)
+	public void socialShare(HttpServletResponse response,@PathVariable String title,@PathVariable String data) throws Exception {
+		response.sendRedirect(fbconnection.getSocialShareUrl(title,data));
+	}
+	
+	@RequestMapping(value="/gohome",method=RequestMethod.GET)
+	public void redirectToHome(HttpServletResponse response) throws IOException {
+		response.sendRedirect("http://localhost:8080/ToDoNotes/#!/home");
+	}
+	
+	
 }
 
 

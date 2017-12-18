@@ -425,4 +425,37 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
 		    });
 	    }
 	    
+	    
+	//for socail Share using feed
+	    
+	/*    $scope.socialShare=function(title,note){
+	    	noteService.shareOnFB(title,note);
+	    }
+	*/
+	//using open-graph
+	    
+		$scope.socialShare = function(note) {
+			FB.init({
+				appId : '1585966938157751',
+				status : true,
+				cookie : true,
+				xfbml : true,
+				version : 'v2.4'
+			});
+			FB.ui({
+				method : 'share_open_graph',
+				action_type : 'og.likes',
+				action_properties : JSON.stringify({
+					object : {
+						'og:title' : note.title,
+						'og:description' : note.description
+					}
+				})
+			}, function(response) {
+				alert('Posting Successfull..');
+			}, function(error) {
+				alert('Somthing went Wrong,Posting of fb Unsuccessfull..');
+			});
+		};
+
 });

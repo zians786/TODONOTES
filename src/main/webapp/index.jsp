@@ -32,6 +32,7 @@
 <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
 
 
+<script src="https://connect.facebook.net/enUS/all.js"></script>
 
 	  <script src = "bower_components/angular-animate/angular-animate.min.js"></script>
       <script src = "bower_components/angular-aria/angular-aria.min.js"></script>
