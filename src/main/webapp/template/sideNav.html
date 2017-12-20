@@ -3,10 +3,15 @@
 
 
 	<md-sidenav md-is-locked-open="true" class="md-whiteframe-4dp">
-	<md-list> <md-list-item> <md-button
-		ng-click="home()" aria-label="Notes" flex> <md-icon></md-icon>
-	<span>Notes</span> </md-button> </md-list-item> <md-list-item> <md-button
-		aria-label="Reminder" flex> <md-icon></md-icon> <span>Reminder</span>
+	<md-list>
+	<md-list-item> 
+	
+	<md-button  ng-click="home()" aria-label="Notes" flex> <md-icon md-svg-icon="img/icons/notes.svg"></md-icon> <span>Notes</span>
+	</md-button> </md-list-item>
+	 
+	  <md-list-item> 
+	<md-button
+		aria-label="Reminder" flex> <md-icon md-svg-icon="img/icons/remind.svg"></md-icon> <span>Reminder</span>
 	</md-button> </md-list-item> </md-list> <md-divider></md-divider> 
 	
 	
@@ -14,19 +19,19 @@
 	
 	 <md-list-item layout="row" layout-align="space-around center">
 	<span flex>Label
-		</span> <md-button ng-click="showLabelDialog()" class="md-raised">Edit</md-button></md-list-item>
+		</span> <md-button ng-click="showLabelDialog()" >Edit</md-button></md-list-item>
 		
-	<md-list-item ng-repeat="label in readLabel"><md-button aria-label="" flex> <md-icon></md-icon> <span>{{label.labelName}}</span> </md-button> </md-list-item>	
+	<md-list-item ng-repeat="label in readLabel"><md-button aria-label="" flex> <md-icon md-svg-icon="img/icons/label_black.svg"></md-icon> <span>{{label.labelName}}</span> </md-button> </md-list-item>	
 		 
-	<md-list-item><md-button ng-click="showLabelDialog()" aria-label="" flex> <md-icon></md-icon> <span>Create
+	<md-list-item><md-button ng-click="showLabelDialog()" aria-label="" flex> <md-icon md-svg-icon="img/icons/add.svg"></md-icon> <span>Create
 		new label</span> </md-button> </md-list-item>
 		
 		
 		
 		 </md-list> <md-divider></md-divider> <md-list> <md-list-item>
 	<md-button ng-click="archivedNotes()" aria-label="Archive" flex>
-	<md-icon></md-icon> <span>Archive</span> </md-button> </md-list-item> <md-list-item>
+	<md-icon md-svg-icon="img/icons/archive.svg"></md-icon> <span>Archive</span> </md-button> </md-list-item> <md-list-item>
 	<md-button ng-click="trashNotes()" aria-label="Trash" flex>
-	<md-icon></md-icon> <span>Trash</span> </md-button> </md-list-item> </md-list> </md-sidenav>
+	<md-icon md-svg-icon="img/icons/delete.svg"></md-icon> <span>Trash</span> </md-button> </md-list-item> </md-list> </md-sidenav>
 
 </div>

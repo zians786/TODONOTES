@@ -41,10 +41,13 @@
       <script src="bower_components/ng-file-upload/ng-file-upload.js"></script> 
       <script src="bower_components/angular-material-datetimepicker/js/angular-material-datetimepicker.js"></script> 
 	
-      <script src="bower_components/moment/moment.js"></script>
+        <script src="bower_components/moment/moment.js"></script>
 		<script src="bower_components/ng-tags-input/ng-tags-input.js"></script>
 		<script src="bower_components/angular-toastr/dist/angular-toastr.js"></script>
 		<script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script> 													
+		<script src="bower_components/angular-avatar/dist/angular-avatar.js"></script>
+
+
 <!-- <link rel="stylesheet" type="text/css" href="css/login.css">
  -->
 <!-- JAVASCRIPT 

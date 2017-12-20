@@ -9,13 +9,12 @@
 <!-- <div class="container" layout="column" layout-align="center center">
 	 -->
 
-	<div flex="75" class="container" layout="column" layout-align="center center" >
+	<div flex="75" class="container" layout="column">
 	
 	
-		<md-content>
 	 
 
-		<div layout="row" layout-align="center center">
+		<div  layout="row" layout-align="center center">
 			<md-card> <md-card-content>
 
 
@@ -138,9 +137,15 @@
 <div><h4>Pinned</h4></div>
 		<div layout="row" layout-align="center center" layout-wrap>
 			<div ng-repeat="note in readNotes | filter:{pinned:true}" flex={{flex}}>
-
+					
 				<md-card ng-mouseenter="mouse=true" ng-mouseleave="mouse=false"
 					style="background-color:{{note.color}};" >
+					
+					
+					<div role="button" ng-click="pin(note)" aria-label="Pin" flex="10" flex-offset="90">
+						<md-icon md-svg-icon="img/icons/pin1.svg" style="color:#4285f4;"></md-icon>
+					</div>
+					
 				<div ng-click=showDialog(note)>
 				
 					<div ng-if="note.image"><img ng-src={{note.image}} style=" max-width: 100%;"></div>
@@ -177,11 +182,7 @@
 					<div role="button" ng-click="archive(note)" aria-label="Archive">
 						<md-icon md-svg-icon="img/icons/archive.svg"></md-icon>
 					</div>
-					
-					<div role="button" ng-click="pin(note)" aria-label="Pin">
-						<md-icon md-svg-icon="img/icons/pin1.svg"></md-icon>
-					</div>
-					
+									
 
 					<md-menu-bar> <md-menu>
 
@@ -207,6 +208,12 @@
 
 				<md-card ng-mouseenter="mouse=true" ng-mouseleave="mouse=false"
 					style="background-color:{{note.color}};" >
+	
+				<div ng-show="mouse" role="button" ng-click="pin(note)" aria-label="Pin" flex="10" flex-offset="90">
+						<md-icon md-svg-icon="img/icons/pin1.svg"></md-icon>
+					</div>
+	
+				
 				<div ng-click=showDialog(note)>
 				
 					<div ng-if="note.image"><img ng-src={{note.image}} style=" max-width: 100%;"></div>
@@ -224,7 +231,7 @@
 					
 					</div>
 				<md-card-content>
-				
+		
 				
 			<!-- 	for reminder -->
 			
@@ -253,14 +260,22 @@
 				<div role="button" ng-click="$mdMenu.open()">
 					 <md-icon md-svg-icon="img/icons/remind.svg"  aria-label="Remind me" >
 				</div>
+	
 	 <md-menu-content>
 	 <div layout="column">
-		<!-- 	<input ng-model="remind" datetime-picker date-format="yyyy-MM-dd HH:mm:ss" close-on-select="false" /> --> 
-		<md-input-container>	
-		  <label>Select Date and Time</label>
+
+
+	<md-input-container>	
+	 <label>Select Date and Time</label>
 <input mdc-datetime-picker date="true" time="true" type="text" id="datetime"
 placeholder="Date" show-todays-date="" min-date="date" ng-model="remind"   class=" md-input" readonly="readonly">
 </md-input-container>
+
+
+
+<md-button ng-click="reminder(note,remind)" layout="row" layout-align="space-between center"><span>Later today</span><span>8:00 PM</span></md-button>
+<md-button ng-click="reminder(note,remind)" layout="row" layout-align="space-between center"><span>Tomorrow</span><span>8:00 AM</span></md-button>
+<md-button ng-click="reminder(note,remind)" layout="row" layout-align="space-between center"><span>Next Week</span><span>MON, 8:00 AM</span></md-button>
 
 
 				<md-button ng-click="reminder(note,remind)">save</md-button> 	
@@ -284,10 +299,6 @@ placeholder="Date" show-todays-date="" min-date="date" ng-model="remind"   class
 	
 					<div role="button" ng-click="archive(note)" aria-label="Archive">
 						<md-icon md-svg-icon="img/icons/archive.svg"></md-icon>
-					</div>
-					
-					<div role="button" ng-click="pin(note)" aria-label="Pin">
-						<md-icon md-svg-icon="img/icons/pin1.svg"></md-icon>
 					</div>
 					
 
@@ -346,7 +357,5 @@ placeholder="Date" show-todays-date="" min-date="date" ng-model="remind"   class
 				</md-card-content> </md-card>
 			</div>
 		</div>
-
-		</md-content>
 	</div>
 </div>

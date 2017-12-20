@@ -8,8 +8,9 @@ md-icon{
     cursor: pointer;
 }
     
-
-
+div{
+	 border: 0px; outline: 0px
+}
 /* for color picker */    
     
     .color-palette {

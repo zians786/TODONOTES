@@ -6,6 +6,8 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
 		var userInfo=loginService.UserInfo();
 		userInfo.then(function(response){
 			$scope.user=response.data;
+			$scope.firstLetter=$scope.user.userName.charAt(0);
+			console.log($scope.firstLetter);
 			console.log($scope.user);
 		},function(response){
 			$location.path('login');
@@ -286,7 +288,7 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
 	$scope.changeView=function(){
 
 		if($scope.view){
-			$scope.flex="65";
+			$scope.flex="55";
 			$scope.view=!$scope.view;
 		}else
 		{
