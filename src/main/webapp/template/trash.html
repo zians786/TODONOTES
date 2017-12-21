@@ -1,18 +1,23 @@
-	
- <nav-bar></nav-bar>
-	
+<nav-bar></nav-bar>
 
-		<div class="container" layout="row">
-	
-<side-nav></side-nav>
-	
-	<div layout="row" layout-align="center center" layout-wrap>
-			<div ng-repeat="note in readNotes | filter:{inTrash:true} " flex={{flex}}>
+<div layout="row" layout-align="center">
 
+<side-nav></side-nav>	
+
+<!-- <div class="container" layout="column" layout-align="center center">
+	 -->
+
+	<div flex="75" class="container" layout="column">
+	
+	
+	
+<div layout-padding><h4>Trash</h4></div>
+		<div layout="row" layout-align="center center" layout-wrap>
+			<div ng-repeat="note in readNotes | filter:{inTrash:true}"  flex={{flex}}>
+					
 				<md-card ng-mouseenter="mouse=true" ng-mouseleave="mouse=false"
-					style="background-color:{{note.color}};">
-				<div ng-click=showDialog(note)>
-				
+					style="background-color:{{note.color}};" >
+					
 					<div ng-if="note.image"><img ng-src={{note.image}} style=" max-width: 100%;"></div>
 					<md-card-title>
 					<div style="overflow-wrap: break-word;contenteditable="
@@ -23,9 +28,9 @@
 					<div style="overflow-wrap: break-word;" contenteditable="false"
 						aria-multiline="true" role="textbox">{{note.description}}</div>
 					</md-card-content>
-				</div>
 				<md-card-content>
-				<div ng-show="mouse" layout="row" layout-align="space-around center"
+				
+<div ng-show="mouse" layout="row" layout-align="space-around center"
 					role="toolbar">
 
 					<md-menu-bar> <md-menu>
@@ -43,4 +48,6 @@
 				</md-card-content> </md-card>
 			</div>
 		</div>
+	
+	</div>
 </div>

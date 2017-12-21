@@ -28,38 +28,75 @@
 			<br ng-show="showTitle">
 
 
+			<!-- 	for reminder -->
+			
+							<div ng-if="note.reminder"><br>
+				<span style="background-color:white;">{{ note.reminder | date :  "yyyy-MM-dd HH:mm:ss"}}
+				<md-icon ng-click="note.reminder=''"  md-svg-icon="img/icons/cross.svg" style="height:16px;width:16px;min-height:16px;min-width:16px;"></md-icon></span>
+				</div>	
+				
+
+
 			<div ng-show="showTitle" layout="row"
 				layout-align="space-around center" role="toolbar">
 
-				<div role="button" aria-label="Remind me">
-					<md-icon md-svg-icon="img/icons/remind.svg"></md-icon>
+
+		<md-menu-bar> <md-menu>
+				<div role="button" ng-click="$mdMenu.open()">
+					 <md-icon md-svg-icon="img/icons/remind.svg"  aria-label="Remind me" >
 				</div>
-				<div role="button" aria-label="Collaborator">
-					<md-icon md-svg-icon="img/icons/collaborate.svg"></md-icon>
-				</div>
-				<div role="button" aria-label="Change color">
-					<md-icon md-svg-icon="img/icons/color.svg"></md-icon>
-				</div>
-				<div role="button" aria-label="Add image">
-					<md-icon md-svg-icon="img/icons/image.svg"></md-icon>
-				</div>
-				<div role="button" aria-label="Archive">
-					<md-icon md-svg-icon="img/icons/archive.svg"></md-icon>
-				</div>
-				<div role="button" aria-label="More">
-					<md-icon md-svg-icon="img/icons/more.svg"></md-icon>
-				</div>
-				<md-button ng-show="showTitle" ng-click="addNote()">Done</md-button>
+	
+	 <md-menu-content>
+	 <div layout="column">
+
+
+
+<div layout-padding>Reminder :</div>
+<md-button ng-click="reminderSet(note,0)" layout="row" layout-align="space-between center"><span>Later today</span><span>8:00 PM</span></md-button>
+<md-button ng-click="reminderSet(note,1)" layout="row" layout-align="space-between center"><span>Tomorrow</span><span>8:00 AM</span></md-button>
+<md-button ng-click="reminderSet(note,2)" layout="row" layout-align="space-between center"><span>Next Week</span><span>MON, 8:00 AM</span></md-button>
+<br>
+<div layout-padding>Pickup Manually :</div>
+<br>
+	<md-input-container>	
+	 <label>Select Date and Time</label>
+<input mdc-datetime-picker date="true" time="true" type="text" id="datetime"
+placeholder="Date" show-todays-date="" min-date="date" ng-model="remind"  ng-change="reminder(note,remind)" class=" md-input" readonly="readonly">
+</md-input-container>
+
+	
+		 </div></md-menu-content> </md-menu> </md-menu-bar>					
+
+
+					<div role="button" aria-label="Collaborator">
+						<md-icon md-svg-icon="img/icons/collaborate.svg"></md-icon>
+					</div>
+					<color-picker color="color" options="options"
+						on-color-changed="colorChanged(newColor,note)"></color-picker>
+					
+					<div ng-click="uploadImage(note)" role="button" aria-label="Add image">
+					<input ng-show="false" id="image" type='file' ng-model-instant ng-model="file" onchange="angular.element(this).scope().imageUpload(this)" />
+					
+						<md-icon md-svg-icon="img/icons/image.svg"></md-icon>
+					</div>
+	
+					<div role="button" ng-click="archive(note)" aria-label="Archive">
+						<md-icon md-svg-icon="img/icons/archive.svg"></md-icon>
+					</div>
+					
+
+					<md-button ng-show="showTitle" ng-click="addNote()">Done</md-button>
+	
 			</div>
 
 
 
-<!-- for Dialog Box -->
+<!-- for Note Dialog Box -->
 
 
 			<div style="visibility: hidden">
-				<div class="md-dialog-container" id="myStaticDialog">
-					<md-dialog> <md-card> <md-card-content>
+				<div class="md-dialog-container" id="myStaticDialog" >
+					<md-dialog layout-padding>  <md-card-content>
 
 
 					<div contenteditable="true" ng-bind-html="notes.title"
@@ -95,22 +132,24 @@
 						<md-button ng-click="updateNote(notes)">Done</md-button>
 					</div>
 
-					<!-- 	<div role="button" class="iconProperty" aria-label="Remind me" aria-disabled="false" tabindex="0" style="user-select: none;">
 
-	<md-icon md-svg-icon="img/icons/remind.svg"></md-icon></div>
-	<md-button ng-show="showTitle" ng-click="addNote()">Done</md-button>
- --> </md-card-content> </md-card> </md-dialog>
+
+ </md-card-content>  </md-dialog>
 				</div>
 			</div>
 	
 		</div>
 
 
+<!-- for Label Dialog box -->
+
+
+
 			<div style="visibility: hidden">
 				<div class="md-dialog-container" id="myLabelDialog">
-				<md-dialog>
+				<md-dialog layout-padding>
 				
-				<md-card>
+			
 
 <md-card-title>Label </md-card-title>
 <md-card-content>
@@ -127,14 +166,61 @@
          <md-icon flex="20" ng-click="updateLabel(label)" md-svg-src="img/icons/write.svg"></md-icon>
 </div>
 </md-card-content>
-</md-card>
+
 				
 				
 				</md-dialog>
 				</div></div>
 
 
-<div><h4>Pinned</h4></div>
+
+<!-- for collaborator dialog box -->
+
+
+<div style="visibility: hidden">
+<div class="md-dialog-container" id="myCollabDialog">
+<md-dialog layout-padding flex="40">
+<md-card-title>Collaborators </md-card-title>
+<md-divider></md-divider>
+<md-card-content layout="column" layout-padding>
+
+
+<div ng-show="user.profilePicture" layout="row" layout-align="start center" ><img ng-src={{user.profilePicture}} style="border-radius:45px; max-width: 100%;" aria-label="profile">
+<div flex="5"></div><div layout="column">
+<span> <b>{{user.userName}}</b> <i>(Owner)</i></span>
+<span style="color: Grey;"> {{user.email}}</span>
+</div>
+</div>
+
+<div layout="row" layout-align="space-between center">
+
+<div layout="row" layout-align="start center">
+<div><ng-avatar initials="U" auto-color="true" class="avatar" round-shape="true" ></ng-avatar></div>
+<div contentEditable="true" data-text="Email to share with"></div>
+
+</div>
+<div>
+<md-icon md-svg-icon="img/icons/check.svg"></md-icon>
+</div>
+</div>
+
+
+<!-- 
+<div ng-hide="user.profilePicture"><ng-avatar initials="U" auto-color="true" class="avatar" round-shape="true" ></ng-avatar>
+</div>
+ -->
+ 
+ </md-card-content>
+
+</md-dialog>
+</div>
+
+</div>
+
+
+
+
+<div layout-padding><h4>Pinned</h4></div>
 		<div layout="row" layout-align="center center" layout-wrap>
 			<div ng-repeat="note in readNotes | filter:{pinned:true}" flex={{flex}}>
 					
@@ -201,7 +287,7 @@
 		</div>
 
 
-		<div><h4>Others</h4></div>
+		<div layout-padding><h4>Others</h4></div>
 
 		<div layout="row" layout-align="center center" layout-wrap>
 			<div ng-repeat="note in readNotes | filter:{pinned:false,inTrash:false,archived:false} " flex={{flex}}>
@@ -265,27 +351,28 @@
 	 <div layout="column">
 
 
+
+<div layout-padding>Reminder :</div>
+<md-button ng-click="reminderSet(note,0)" layout="row" layout-align="space-between center"><span>Later today</span><span>8:00 PM</span></md-button>
+<md-button ng-click="reminderSet(note,1)" layout="row" layout-align="space-between center"><span>Tomorrow</span><span>8:00 AM</span></md-button>
+<md-button ng-click="reminderSet(note,2)" layout="row" layout-align="space-between center"><span>Next Week</span><span>MON, 8:00 AM</span></md-button>
+<br>
+<div layout-padding>Pickup Manually :</div>
+<br>
 	<md-input-container>	
 	 <label>Select Date and Time</label>
 <input mdc-datetime-picker date="true" time="true" type="text" id="datetime"
-placeholder="Date" show-todays-date="" min-date="date" ng-model="remind"   class=" md-input" readonly="readonly">
+placeholder="Date" show-todays-date="" min-date="date" ng-model="remind"  ng-change="reminder(note,remind)" class=" md-input" readonly="readonly">
 </md-input-container>
 
-
-
-<md-button ng-click="reminder(note,remind)" layout="row" layout-align="space-between center"><span>Later today</span><span>8:00 PM</span></md-button>
-<md-button ng-click="reminder(note,remind)" layout="row" layout-align="space-between center"><span>Tomorrow</span><span>8:00 AM</span></md-button>
-<md-button ng-click="reminder(note,remind)" layout="row" layout-align="space-between center"><span>Next Week</span><span>MON, 8:00 AM</span></md-button>
-
-
-				<md-button ng-click="reminder(note,remind)">save</md-button> 	
+	
 		 </div></md-menu-content> </md-menu> </md-menu-bar>					
 
 
 		<!-- 			<div role="button" aria-label="Remind me">
 						<md-icon md-svg-icon="img/icons/remind.svg"></md-icon>
 					</div> -->
-					<div role="button" aria-label="Collaborator">
+					<div ng-click="showCollab(note)" role="button" aria-label="Collaborator">
 						<md-icon md-svg-icon="img/icons/collaborate.svg"></md-icon>
 					</div>
 					<color-picker color="color" options="options"
@@ -337,7 +424,7 @@ placeholder="Date" show-todays-date="" min-date="date" ng-model="remind"   class
 						
 					 </md-menu-item>
 					
-					<md-menu-item ng-repeat="label in readLabel" 	 > 
+					<md-menu-item ng-repeat="label in readLabel" layout-padding> 
 					 <md-checkbox   ng-click="addNoteLabel(label.labelId,note.noteId)" aria-label="Checkbox"><span>{{label.labelName}}</span>
             			</md-checkbox></md-menu-item>
             

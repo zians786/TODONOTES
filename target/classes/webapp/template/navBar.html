@@ -32,28 +32,39 @@
 			md-svg-icon="img/icons/grid.svg"></md-icon> </md-button>
 
 
-		<md-menu-bar ng-if="user.profilePicture"> <md-menu> <img ng-src={{user.profilePicture}} style="border-radius:45px; max-width: 100%;" aria-label="profile" ng-click="$mdMenu.open()">
+		<md-menu-bar ng-show="user.profilePicture"> <md-menu> <img ng-src={{user.profilePicture}} style="border-radius:45px; max-width: 100%;" aria-label="profile" ng-click="$mdMenu.open()">
 	 <md-menu-content>
-		<div layout="row" layout-align="space-around center">
+	<!-- 	<div layout="row" layout-align="space-around center">
 		<img ng-src={{user.profilePicture}} style="border-radius:45px; max-width: 100%;">
 		<div layout="column" layout-align="center start">
 		<div>{{user.userName}}</div><br>
 		<div>{{user.email}}</div><br>
 		</div>
 		</div>	
-			
+	 -->
+	 <div layout="row" layout-align="start center" layout-padding><img ng-src={{user.profilePicture}} style="border-radius:45px; max-width: 100%;" aria-label="profile">
+<div flex="5"></div><div layout="column">
+<span> <b>{{user.userName}}</b></span>
+<span> {{user.email}}</span>
+</div>
+</div>
+	 
+	 
+	 		
 			<md-divider></md-divider>
 		<md-button ng-click="logout()"> Sign out </md-button>
 		
 		 </md-menu-content> </md-menu> </md-menu-bar>
 
 			
-		<md-menu-bar> <md-menu> 
-		<div role="button" ng-click="$mdMenu.open()"><ng-avatar initials="{{firstLetter}}" upper-case="true" auto-color="true" class="avatar" round-shape="true" ></ng-avatar>
+		<md-menu-bar ng-hide="user.profilePicture"> <md-menu> 
+		<div role="button" ng-click="$mdMenu.open()">
+		
+		<ng-avatar string="{{user.userName}}" bind="true" upper-case="true" auto-color="true" class="avatar" round-shape="true" ></ng-avatar>
 		</div>
 	 <md-menu-content>
 		<div layout="row" layout-align="space-around center">
-		<ng-avatar initials={{firstLetter}} upper-case="true" auto-color="true" class="avatar" round-shape="true" ></ng-avatar>
+		<ng-avatar string="{{user.userName}}" bind="true" upper-case="true" auto-color="true" class="avatar" round-shape="true" ></ng-avatar>
 		<div layout="column" layout-align="center start">
 		<div>{{user.userName}}</div><br>
 		<div>{{user.email}}</div><br>

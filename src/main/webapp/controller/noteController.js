@@ -2,12 +2,11 @@ var todo=angular.module("TODO");
 todo.controller('noteController',function(toastr,$scope,noteService,loginService,labelService,$location,$mdDialog,$mdToast,$interval,$filter){
 
 	
+	   
 	var getUserdetail=function(){
 		var userInfo=loginService.UserInfo();
 		userInfo.then(function(response){
 			$scope.user=response.data;
-			$scope.firstLetter=$scope.user.userName.charAt(0);
-			console.log($scope.firstLetter);
 			console.log($scope.user);
 		},function(response){
 			$location.path('login');
@@ -164,6 +163,7 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
 	
 	// for adding user notes
 	$scope.addNote=function(){
+		
 		var add=noteService.add($scope.note,$scope.error);
 		add.then(function(response){
 			console.log(response.data);
@@ -206,6 +206,16 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
     	});
     }
 
+    
+    //Dialog for Collaborators
+    
+    $scope.showCollab=function(note){
+    	 $mdDialog.show({
+			    contentElement: '#myCollabDialog',
+			    parent: angular.element(document.body),
+		      clickOutsideToClose:true
+			  });
+    }
 	
 	
 	// for updating notes
@@ -353,6 +363,35 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
 	    	});
 	    
 	    }    
+	    
+	    $scope.reminderSet=function(note,caseValue){
+	    	var date=new Date();
+    		date.setMinutes(0);
+    		date.setSeconds(0);
+	    	switch(caseValue){
+	    	case 0:
+	    		date.setHours(20);
+	    		break;
+	    	case 1:
+	    		date.setDate(date.getDate()+1);
+	    		date.setHours(8);
+	    		break;
+	    	case 2:
+	    		date.setHours(8);
+	    		var day=8-date.getDay();
+	    		date.setDate(date.getDate()+day);
+	    		break;
+	    	}
+	    	
+	    	note.reminder=date;
+	    	console.log(note);
+	    	var updateResponse=noteService.update(note);
+	    	updateResponse.then(function(response){
+	    		getNotes();
+	    	});	
+	    	
+	    }
+	    
 	
 	//Dialog for Label
 	/*    
@@ -459,5 +498,11 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
 				alert('Somthing went Wrong,Posting of fb Unsuccessfull..');
 			});
 		};
+		
+		
+		$scope.chen=function(){
+			console.log("ITS working");
+		}
+		
 
 });
