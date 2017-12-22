@@ -2,9 +2,11 @@ package com.bridgeit.dao;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -55,8 +57,16 @@ public class NoteDaoImp implements NoteDao{
 
 	public List<Note> read(User user) {
 		Query query=getSession().createQuery("from Note where userId='"+user.getUserId()+"'");
-		List<Note> note1= query.list();
-		return note1;
+		List<Note> notes= query.list();
+		
+		Criteria criteria=getSession().createCriteria(Note.class);
+		criteria.createAlias("sharedUser", "user");
+		criteria.add(Restrictions.eq("user.userId", user.getUserId()));
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		List<Note> notes1 = criteria.list();
+		notes.addAll(notes1);
+		
+		return notes;
 		
 		// TODO Auto-generated method stub
 		

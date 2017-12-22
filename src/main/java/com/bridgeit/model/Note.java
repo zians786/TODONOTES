@@ -52,7 +52,18 @@ public class Note {
 	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private Set<Label> label;
 
+	@JoinTable(name="SharedNote",joinColumns= {@JoinColumn(name="noteId")},inverseJoinColumns= {@JoinColumn(name="userId")})
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	private Set<User> sharedUser;
 	
+	public Set<User> getSharedUser() {
+		return sharedUser;
+	}
+
+	public void setSharedUser(Set<User> sharedUser) {
+		this.sharedUser = sharedUser;
+	}
+
 	public Set<Label> getLabel() {
 		return label;
 	}

@@ -196,11 +196,11 @@ placeholder="Date" show-todays-date="" min-date="date" ng-model="remind"  ng-cha
 
 <div layout="row" layout-align="start center">
 <div><ng-avatar initials="U" auto-color="true" class="avatar" round-shape="true" ></ng-avatar></div>
-<div contentEditable="true" data-text="Email to share with"></div>
+<div contentEditable="true" data-text="Email to share with" ng-model="email"></div>
 
 </div>
 <div>
-<md-icon md-svg-icon="img/icons/check.svg"></md-icon>
+<md-icon ng-click="shareNote(email,sharedNote.noteId)" md-svg-icon="img/icons/check.svg"></md-icon>
 </div>
 </div>
 

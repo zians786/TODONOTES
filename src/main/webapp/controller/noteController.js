@@ -210,6 +210,7 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
     //Dialog for Collaborators
     
     $scope.showCollab=function(note){
+    	$scope.sharedNote=angular.copy(note);
     	 $mdDialog.show({
 			    contentElement: '#myCollabDialog',
 			    parent: angular.element(document.body),
@@ -503,6 +504,20 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
 		$scope.chen=function(){
 			console.log("ITS working");
 		}
+		
+	// for Sharing note (Collaborator)
+		
+		$scope.shareNote=function(email,noteId){
+			console.log(email);
+			console.log(noteId);
+			
+			var shareResp=noteService.shareNote(email,noteId);
+			shareResp.then(function(response){
+				console.log(response.data);
+			})
+		}
+		
+		
 		
 
 });

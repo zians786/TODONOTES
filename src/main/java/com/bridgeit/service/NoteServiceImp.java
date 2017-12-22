@@ -2,6 +2,7 @@ package com.bridgeit.service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -11,9 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bridgeit.dao.LabelDao;
 import com.bridgeit.dao.NoteDao;
+import com.bridgeit.dao.UserDao;
 import com.bridgeit.model.Label;
 import com.bridgeit.model.Note;
 import com.bridgeit.model.User;
+import com.bridgeit.model.UserResponse;
 import com.bridgeit.utility.JWT;
 
 @Component
@@ -25,6 +28,9 @@ public class NoteServiceImp implements NoteService {
 
 	@Autowired
 	LabelDao labelDao;
+	
+	@Autowired
+	UserDao userDao;
 	
 	@Autowired
 	JWT jwtObject;
@@ -118,6 +124,22 @@ public class NoteServiceImp implements NoteService {
 		set.remove(label);
 		note.setLabel(set);
 		noteDao.update(note);
+	}
+
+	@Override
+	public String shareNote(String email, int noteId, int userId) {
+		if(userDao.emailValidaton(email)) {
+			Note note=noteDao.read(noteId);
+			User user=userDao.getUserByEmailId(email);
+			Set<User> userSet=new HashSet<>();
+			userSet.add(user);
+			note.setSharedUser(userSet);
+			noteDao.update(note);
+			return "Note Shared Successfully";
+		}else {
+			return null;
+		}
+
 	}
 
 }

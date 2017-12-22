@@ -132,6 +132,15 @@ ToDo.factory('noteService',function($http,$location){
 			url:"socialShare/title/"+title+"/data/"+note,
 		});
 	}
+	
+	userNote.shareNote=function(email,noteId){
+		return $http({
+			method:"POST",
+			url:"notes/share/email/"+email+"/note/"+noteId,
+			headers: {'accToken': localStorage.getItem('token')
+			}
+		});
+	}
 
 	return userNote;
 });
