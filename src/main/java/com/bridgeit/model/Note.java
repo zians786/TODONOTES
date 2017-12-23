@@ -44,7 +44,6 @@ public class Note {
 
 	@ManyToOne()
     @JoinColumn(name = "userId")
-	@JsonIgnore
 	private User user;
 	
 	

@@ -127,7 +127,7 @@ public class NoteServiceImp implements NoteService {
 	}
 
 	@Override
-	public String shareNote(String email, int noteId, int userId) {
+	public Note shareNote(String email, int noteId, int userId) {
 		if(userDao.emailValidaton(email)) {
 			Note note=noteDao.read(noteId);
 			User user=userDao.getUserByEmailId(email);
@@ -135,11 +135,21 @@ public class NoteServiceImp implements NoteService {
 			userSet.add(user);
 			note.setSharedUser(userSet);
 			noteDao.update(note);
-			return "Note Shared Successfully";
+			return note;
 		}else {
 			return null;
 		}
 
 	}
 
+	@Override
+	public Note removeSharedNote(int sharedUserId, int noteId) {
+		Note note = noteDao.read(noteId);
+		User user = userDao.getUserByUserId(sharedUserId);
+		Set<User> userSet=note.getSharedUser();
+		userSet.remove(user);
+		note.setSharedUser(userSet);
+		noteDao.update(note);
+		return note;
+	}
 }

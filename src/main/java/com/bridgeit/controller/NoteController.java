@@ -220,17 +220,16 @@ public class NoteController {
 	}
 
 	@RequestMapping(value="notes/share/email/{email}/note/{noteId}",method=RequestMethod.POST)
-	public ResponseEntity<UserResponse> shareNote(@PathVariable String email,@PathVariable int noteId, HttpServletRequest request){
+	public ResponseEntity<?> shareNote(@PathVariable String email,@PathVariable int noteId, HttpServletRequest request){
 		
 		int userId = jwtObject.jwtVerifyToken(request.getHeader("accToken"));
 		
 
 			UserResponse message=new UserResponse();
 		if (userId != 0) {
-			 String result=noteService.shareNote(email,noteId,userId);
-			if(result!=null) {
-				message.setMessage(result);
-				return new ResponseEntity<UserResponse>(message, HttpStatus.OK);	
+			 Note note=noteService.shareNote(email,noteId,userId);
+			if(note!=null) {
+				return new ResponseEntity<Note>(note, HttpStatus.OK);	
 			}else {
 			 message.setMessage("Email-Id is not Exist");
 			return new ResponseEntity<UserResponse>(message, HttpStatus.CONFLICT);
@@ -242,7 +241,24 @@ public class NoteController {
 
 		
 	}
+	
+	@RequestMapping(value="notes/removeShare/user/{sharedUserId}/note/{noteId}",method=RequestMethod.POST)
+	public ResponseEntity<?> removeShare(@PathVariable int sharedUserId ,@PathVariable int noteId,HttpServletRequest request){
+
+		int userId = jwtObject.jwtVerifyToken(request.getHeader("accToken"));
+		
+		if (userId != 0) {
+			 
+			Note note=noteService.removeSharedNote(sharedUserId, noteId);
+			return new ResponseEntity<Note>(note, HttpStatus.OK);
+		} else {
+			UserResponse message=new UserResponse();
+			message.setMessage("Invalid Token");
+			return new ResponseEntity<UserResponse>(message, HttpStatus.CONFLICT);
+		}
 		
 	}
+		
+}
 	
 

@@ -18,7 +18,8 @@ public interface NoteService {
 		void remindNote(Note note,int userId);
 		void setLabel(int labelId,int noteId);
 		void deleteLabel(int labelId,int noteId);
-		String shareNote(String email,int noteId,int userId);
+		Note shareNote(String email,int noteId,int userId);
+		Note removeSharedNote(int sharedUserId,int noteId);
 	}
 
 

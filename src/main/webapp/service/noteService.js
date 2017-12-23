@@ -142,5 +142,16 @@ ToDo.factory('noteService',function($http,$location){
 		});
 	}
 
+	
+	userNote.removeShared=function(userId,noteId){
+		return $http({
+			method:"POST",
+			url:"notes/removeShare/user/"+userId+"/note/"+noteId,
+			headers: {'accToken': localStorage.getItem('token')
+			}
+		});
+		
+	}
+	
 	return userNote;
 });

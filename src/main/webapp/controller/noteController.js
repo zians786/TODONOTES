@@ -13,7 +13,7 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
 		});
 	}
 	getUserdetail();
-
+	$scope.visible='hidden';
 
 
     // for Notification using toastr
@@ -210,7 +210,9 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
     //Dialog for Collaborators
     
     $scope.showCollab=function(note){
-    	$scope.sharedNote=angular.copy(note);
+    	$scope.sharedNote=note;
+    	
+    	
     	 $mdDialog.show({
 			    contentElement: '#myCollabDialog',
 			    parent: angular.element(document.body),
@@ -508,16 +510,28 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
 	// for Sharing note (Collaborator)
 		
 		$scope.shareNote=function(email,noteId){
-			console.log(email);
-			console.log(noteId);
-			
 			var shareResp=noteService.shareNote(email,noteId);
 			shareResp.then(function(response){
+				$scope.sharedNote=response.data;
+				getNotes();
 				console.log(response.data);
 			})
 		}
 		
+	// for Removing Shared Note
 		
+		$scope.removeShared=function(userId,noteId){
+			var removeResp=noteService.removeShared(userId,noteId);
+			removeResp.then(function(response){
+				console.log(response.data);
+				$scope.sharedNote=response.data;
+				getNotes();
+			},function(response){
+				console.log(response.data);
+				
+			});
+	
+		}
 		
 
 });
