@@ -66,3 +66,6 @@ div{
     -webkit-background-size: 16px 16px;
     background-size: 16px 16px
 }
+.md-virtual-repeat-container.md-autocomplete-suggestions-container{
+	    visibility: hidden;
+}

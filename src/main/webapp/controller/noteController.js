@@ -1,7 +1,7 @@
 var todo=angular.module("TODO");
 todo.controller('noteController',function(toastr,$scope,noteService,loginService,labelService,$location,$mdDialog,$mdToast,$interval,$filter){
 
-	
+	var allNotes=[];
 	   
 	var getUserdetail=function(){
 		var userInfo=loginService.UserInfo();
@@ -43,6 +43,7 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
 	read.then(function(response){
 		console.log(response.data);
 		$scope.readNotes=response.data;
+		allNotes=$scope.readNotes;
 		  reminderCheck($scope.readNotes);
 		  },function(response){
 		if(response.status==409)
@@ -57,7 +58,7 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
 	});
 
 	
-	//for fetching all user labels
+	// for fetching all user labels
 	var getAllLabel=function(){
 	var getLabel=labelService.read();
 	getLabel.then(function(response){
@@ -75,8 +76,16 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
 	read.then(function(response){
 		console.log(response.data);
 		$scope.readNotes=response.data;
+		$scope.showPin=false;
+		for(var i=0;i<$scope.readNotes.length;i++){
+			if($scope.readNotes[i].pinned){
+				console.log("inside pin fun");
+				$scope.showPin=true;
+			}
+		}
 		 reminderCheck($scope.readNotes);
 });
+	return $scope.readNotes;
 	}
 	
 
@@ -207,7 +216,7 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
     }
 
     
-    //Dialog for Collaborators
+    // Dialog for Collaborators
     
     $scope.showCollab=function(note){
     	$scope.sharedNote=note;
@@ -298,14 +307,20 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
 	$scope.view="true";
 
 	$scope.flex="30";
+	$scope.align1="start";
+	$scope.align2="start";
 	$scope.changeView=function(){
 
 		if($scope.view){
-			$scope.flex="55";
+			$scope.flex="65";
+			$scope.align1="center";
+			$scope.align2="center";
 			$scope.view=!$scope.view;
 		}else
 		{
 			$scope.flex="30";
+			$scope.align1="start";
+			$scope.align2="start";
 			$scope.view=!$scope.view;	
 		}
 		
@@ -335,6 +350,10 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
 	    $scope.hideNav=function(){
 	    	$scope.showNav=!$scope.showNav;
 	    	}	    
+	
+	$scope.search=function(){
+		$location.path('search');
+	}
 	    
 	// for getting all archived notes
 	    $scope.archivedNotes=function(){
@@ -396,19 +415,14 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
 	    }
 	    
 	
-	//Dialog for Label
-	/*    
-	    $scope.showLabelDialog=function(){
-	    	$mdDialog.show({
-	    		templateUrl:"template/labelDialog.html",
-	    		controller:'noteController',
-	    		parent: angular.element(document.body),
-	    		clickOutsideToClose:true
-	    	});
-	    }
-*/
+	// Dialog for Label
+	/*
+	 * $scope.showLabelDialog=function(){ $mdDialog.show({
+	 * templateUrl:"template/labelDialog.html", controller:'noteController',
+	 * parent: angular.element(document.body), clickOutsideToClose:true }); }
+	 */
 	    
-	//Adding Label
+	// Adding Label
 	    
 	    $scope.addLabel=function(label){
 	    	var addLabelResp=labelService.create(label);
@@ -421,7 +435,7 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
 	    	});
 	    }
 	    
-	//deleting label
+	// deleting label
 	    $scope.deleteLabel=function(label){
 	    	var deleteLabelResp=labelService.delete(label);
 	    	deleteLabelResp.then(function(response){
@@ -432,7 +446,7 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
 	    	});
 	    }
 	
-	//updating label    
+	// updating label
 	    $scope.updateLabel=function(label){
 	    	var updateLabelResp=labelService.update(label);
 	    	updateLabelResp.then(function(response){
@@ -446,7 +460,7 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
 	    
 	    
 	    
-	//setting label to notes   
+	// setting label to notes
 	    $scope.addNoteLabel=function(labelId,noteId){
 	    var setLabelResp=noteService.createLabel(labelId,noteId);
 	    setLabelResp.then(function(response){
@@ -470,13 +484,13 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
 	    }
 	    
 	    
-	//for socail Share using feed
+	// for socail Share using feed
 	    
-	/*    $scope.socialShare=function(title,note){
-	    	noteService.shareOnFB(title,note);
-	    }
-	*/
-	//using open-graph
+	/*
+	 * $scope.socialShare=function(title,note){
+	 * noteService.shareOnFB(title,note); }
+	 */
+	// using open-graph
 	    
 		$scope.socialShare = function(note) {
 			FB.init({
@@ -531,6 +545,41 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
 				
 			});
 	
+		}
+		
+		
+		$scope.searchAll=function(text){
+			var notes=allNotes;
+			var index=0;
+			var result=[];
+			for(var i=0;i<notes.length;i++){
+				if((notes[i].title.toLowerCase()).search(text)>-1){
+				result[index++]=notes[i];
+				}
+				else if((notes[i].description.toLowerCase()).search(text)>-1){
+					result[index++]=notes[i];
+				}
+				else if(notes[i].label){
+					var label=notes[i].label;
+					for(var j=0;j<label.length;j++){
+						if((label[j].labelName.toLowerCase()).search(text)>-1){
+							result[index++]=notes[i];
+						}
+					}
+				}else if(notes[i].sharedUser){
+					console.log("inside share");
+					var shared=notes[i].sharedUser;
+					for(var k=0;j<shared.length;k++){
+						if((shared[k].email.toLowerCase()).search(text)>-1){
+							result[index++]=notes[i];
+						}else if((shared[k].userName.toLowerCase()).search(text)>-1){
+							result[index++]=notes[i];
+						}
+					}
+				}
+			}
+			console.log(result);
+			return result;
 		}
 		
 

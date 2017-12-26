@@ -15,8 +15,8 @@
 		<md-button class="md-icon-button" aria-label="Search"> <md-icon
 			md-svg-icon="img/icons/search.svg"></md-icon> </md-button>
 
-		<div flex="40">
-			<md-autocomplete md-no-cache="true" md-selected-item="selectedItem"
+		<div flex="40" style=" border-radius:4px">
+			<md-autocomplete ng-click="search()" md-no-cache="true" md-selected-item="selectedItem"
 				md-items="item in items" md-search-text="searchText"
 				md-item-text="item.display" placeholder="Search here">
 		</div>
@@ -32,7 +32,7 @@
 			md-svg-icon="img/icons/grid.svg"></md-icon> </md-button>
 
 
-		<md-menu-bar ng-show="user.profilePicture"> <md-menu> <img ng-src={{user.profilePicture}} style="border-radius:45px; max-width: 100%;" aria-label="profile" ng-click="$mdMenu.open()">
+		<md-menu-bar flex-offset="15" ng-show="user.profilePicture"> <md-menu> <img ng-src={{user.profilePicture}} style="border-radius:45px; max-width: 100%;" aria-label="profile" ng-click="$mdMenu.open()">
 	 <md-menu-content>
 	<!-- 	<div layout="row" layout-align="space-around center">
 		<img ng-src={{user.profilePicture}} style="border-radius:45px; max-width: 100%;">

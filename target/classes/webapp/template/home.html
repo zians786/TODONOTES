@@ -1,13 +1,10 @@
 
-<!-- Angular Material Dependencies-->
 <nav-bar></nav-bar>
 
 <div layout="row" layout-align="center">
 
 <side-nav></side-nav>	
 
-<!-- <div class="container" layout="column" layout-align="center center">
-	 -->
 
 	<div flex="75" class="container" layout="column">
 	
@@ -359,8 +356,8 @@ placeholder="Date" show-todays-date="" min-date="date" ng-model="remind"  ng-cha
 
 
 
-<div layout-padding><h4>Pinned</h4></div>
-		<div layout="row" layout-align="center center" layout-wrap>
+<div ng-show="showPin" layout-padding><h4>Pinned</h4></div>
+		<div layout="row" layout-align="start start" layout-wrap layout-padding>
 			<div ng-repeat="note in readNotes | filter:{pinned:true}" flex={{flex}}>
 					
 				<md-card  ng-mouseenter="visible=''" ng-mouseleave="visible='hidden'"
@@ -375,8 +372,7 @@ placeholder="Date" show-todays-date="" min-date="date" ng-model="remind"  ng-cha
 				
 					<div ng-if="note.image"><img ng-src={{note.image}} style=" max-width: 100%;"></div>
 					<md-card-title>
-					<div style="overflow-wrap: break-word;contenteditable="
-						false" class="md-headline">{{note.title}}</div>
+					<div style="overflow-wrap: break-word;" contenteditable="false" class="md-headline">{{note.title}}</div>
 					</md-card-title>
 					<md-card-content>
 
@@ -492,9 +488,12 @@ placeholder="Date" show-todays-date="" min-date="date" ng-model="remind"  ng-cha
 		</div>
 
 
-		<div layout-padding><h4>Others</h4></div>
 
-		<div layout="row" layout-align="center center" layout-wrap>
+
+
+<div ng-show="showPin" layout-padding><h4>Other</h4></div>
+
+		<div layout="row" layout-align="{{align1}} {{align2}}" layout-wrap layout-padding>
 			<div ng-repeat="note in readNotes | filter:{pinned:false,inTrash:false,archived:false} " flex={{flex}}>
 
 				<md-card  ng-mouseenter="visible=''" ng-mouseleave="visible='hidden'"
@@ -509,8 +508,8 @@ placeholder="Date" show-todays-date="" min-date="date" ng-model="remind"  ng-cha
 				
 					<div ng-if="note.image"><img ng-src={{note.image}} style=" max-width: 100%;"></div>
 					<md-card-title>
-					<div style="overflow-wrap: break-word;contenteditable="
-						false" class="md-headline">{{note.title}}</div>
+					
+					<div style="overflow-wrap: break-word;" contenteditable="false" class="md-headline">{{note.title}}</div>
 					</md-card-title>
 					<md-card-content>
 
@@ -523,6 +522,19 @@ placeholder="Date" show-todays-date="" min-date="date" ng-model="remind"  ng-cha
 					</div>
 				
 				<md-card-content>
+				
+		<!-- 		for Collaborator -->
+			<div ng-repeat="collUser in note.sharedUser" layout="row">
+			<div ng-if="collUser.userId" ng-click="showCollab(note)">
+<img ng-show="collUser.profilePicture" ng-src={{collUser.profilePicture}} style="border-radius:45px; max-width: 100%;" aria-label="profile">
+<div ng-hide="collUser.profilePicture">
+<ng-avatar string="{{collUser.userName}}" bind="true" upper-case="true" auto-color="true" class="avatar" round-shape="true" ></ng-avatar>
+</div>			
+			</div>
+			</div>	
+				
+				
+				
 		
 				
 			<!-- 	for reminder -->

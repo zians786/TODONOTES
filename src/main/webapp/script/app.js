@@ -39,6 +39,15 @@ todo.config([ '$stateProvider', '$urlRouterProvider',
 				controller:'noteController'
 				});
 			
+		
+			$stateProvider.state('search',{
+				url:'/search',
+				templateUrl :'template/search.html',
+				controller:'noteController'
+			});
+
+			
+			
 			$stateProvider.state('archive',{
 				url:'/archive',
 				templateUrl :'template/archive.html',

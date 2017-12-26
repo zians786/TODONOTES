@@ -21,7 +21,8 @@
 	<span flex>Label
 		</span> <md-button ng-click="showLabelDialog()" >Edit</md-button></md-list-item>
 		
-	<md-list-item ng-repeat="label in readLabel" ><md-button  flex layout="row" layout-align="start center"> <img flex-offset="15" ng-src="img/icons/label_black.svg"></md-icon> <span flex-offset="10">{{label.labelName}}</span> </md-button> </md-list-item>	
+	<md-list-item ng-repeat="label in readLabel" >
+	<md-button  flex layout="row" layout-align="start center"> <img flex-offset="15" ng-src="img/icons/label_black.svg"></md-icon> <span flex-offset="10">{{label.labelName}}</span> </md-button> </md-list-item>	
 		 
 	<md-list-item><md-button ng-click="showLabelDialog()" aria-label="" flex layout="row" layout-align="start center"> <img flex-offset="15" ng-src="img/icons/add.svg"></md-icon> <span flex-offset="10">Create
 		new label</span> </md-button> </md-list-item>
