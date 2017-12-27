@@ -45,5 +45,24 @@ ToDo.factory('loginService',function($http,$location){
 		});
 	}
 	
+	
+	login.forgot=function(email){
+		return $http({
+			method:"POST",
+			url:'forgot/'+email
+		});
+		
+	}
+	
+	login.reset=function(password){
+		return $http({
+			method:"POST",
+			url:'reset/'+password
+		});
+		
+	}
+	
+	
+	
 	return login;
 });

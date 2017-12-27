@@ -46,6 +46,29 @@ ToDo.controller('loginController',function($scope,loginService,$location){
 	$scope.reset=function(){
 		$location.path('/reset');
 	}
+	$scope.forgot=function(){
+		$location.path('/forgot');
+	}
+	
+	$scope.forgotPassword=function(email){
+		console.log(email);
+		var resp=loginService.forgot(email);
+		resp.then(function(response){
+			console.log(response.data);
+			$location.path('login');
+		});
+		
+	}
+	
+	$scope.resetPassword=function(password){
+		console.log(password);
+		var resp=loginService.reset(password);
+		resp.then(function(response){
+			console.log(response.data);
+			$location.path('login');
+		});
+		
+	}
 	
 	
 });

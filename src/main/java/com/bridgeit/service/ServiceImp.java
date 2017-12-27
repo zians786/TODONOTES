@@ -76,6 +76,12 @@ public class ServiceImp implements Service {
 		return result;
 	}
 
+	public int verifyTokenReset(String token) {
+		return jwt.jwtVerifyToken(token);
+	}
+
+	
+	
 	public String forgetPassword(String userEmail) {
 		String result = null;
 		if (userDao.emailValidaton(userEmail)) {
@@ -91,19 +97,15 @@ public class ServiceImp implements Service {
 
 
 	@Override
-	public String resetPassword(String token,User user) {
-
-		String uid = jwt.jwtVerify(token);
-		int userId = Integer.parseInt(uid);
-
-		String result = null;
-
-		if (uid!=null) 
+	public String resetPassword(int userId,String password) {
+		String result;
+		User user=userDao.getUserByUserId(userId);
+		
+		if (user!=null) 
 		{
-			String password=user.getPassword();
 			user.setPassword(encrypt.encryptPassword(password));
 			
-			userDao.resetPassword(userId,user);
+			userDao.resetPassword(user);
 			result = "Your Password Reset Successull";
 		} else {
 			result = "Invalid Token or User may not Registered with us..";

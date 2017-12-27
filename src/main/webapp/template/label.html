@@ -1,106 +1,15 @@
 
-	<div layout="column" ng-cloak>
-
-	<md-toolbar layout="row" layout-align="start center">
-
-	<div class="md-toolbar-tools"  style="color:white; background-color: rgb(62, 80, 180);">
-
-		<md-button ng-click="hideNav()" class="md-icon-button"
-			aria-label="Menu"> <md-icon
-			md-svg-icon="img/icons/menu.svg"></md-icon> </md-button>
-
-		<h4>Google Keep</h4>
-		<div flex="5"></div>
-		
-		<div flex="50" style="background:white; border-radius:4px" layout="row">
-		<md-button class="md-icon-button" aria-label="Search"> <md-icon 
-			md-svg-icon="img/icons/search.svg" style="color:#4285f4;"></md-icon> </md-button>
-
-		<div flex>
-			<md-autocomplete  md-no-cache="true" md-selected-item="selectedItem"
-				md-items="item in searchAll(searchText)" 
-				md-search-text-change="searchAll(searchText)"
-				md-min-length="2"
-				md-search-text="searchText"
-				md-item-text="item.title" placeholder="Search here">
-		</div>
-			
-		</div>
-
-		<div flex="10"></div>
-	
-		<md-button ng-click="changeView()" ng-show="view"
-			class="md-icon-button" aria-label="list"> <md-icon
-			md-svg-icon="img/icons/list.svg"></md-icon> </md-button>
-
-		<md-button ng-click="changeView()" ng-hide="view"
-			class="md-icon-button" aria-label="grid"> <md-icon
-			md-svg-icon="img/icons/grid.svg"></md-icon> </md-button>
-
-
-		<md-menu-bar flex-offset="10" ng-show="user.profilePicture"> <md-menu> <img ng-src={{user.profilePicture}} style="border-radius:45px; max-width: 100%;" aria-label="profile" ng-click="$mdMenu.open()">
-	 <md-menu-content>
-	<!-- 	<div layout="row" layout-align="space-around center">
-		<img ng-src={{user.profilePicture}} style="border-radius:45px; max-width: 100%;">
-		<div layout="column" layout-align="center start">
-		<div>{{user.userName}}</div><br>
-		<div>{{user.email}}</div><br>
-		</div>
-		</div>	
-	 -->
-	 <div layout="row" layout-align="start center" layout-padding><img ng-src={{user.profilePicture}} style="border-radius:45px; max-width: 100%;" aria-label="profile">
-<div flex="5"></div><div layout="column">
-<span> <b>{{user.userName}}</b></span>
-<span> {{user.email}}</span>
-</div>
-</div>
-	 
-	 
-	 		
-			<md-divider></md-divider>
-		<md-button ng-click="logout()"> Sign out </md-button>
-		
-		 </md-menu-content> </md-menu> </md-menu-bar>
-
-			
-		<md-menu-bar ng-hide="user.profilePicture"> <md-menu> 
-		<div role="button" ng-click="$mdMenu.open()">
-		
-		<ng-avatar string="{{user.userName}}" bind="true" upper-case="true" auto-color="true" class="avatar" round-shape="true" ></ng-avatar>
-		</div>
-	 <md-menu-content>
-		<div layout="row" layout-align="space-around center">
-		<ng-avatar string="{{user.userName}}" bind="true" upper-case="true" auto-color="true" class="avatar" round-shape="true" ></ng-avatar>
-		<div layout="column" layout-align="center start">
-		<div>{{user.userName}}</div><br>
-		<div>{{user.email}}</div><br>
-		</div>
-		</div>	
-			
-			<md-divider></md-divider>
-		<md-button ng-click="logout()"> Sign out </md-button>
-		
-		 </md-menu-content> </md-menu> </md-menu-bar>
-		 			 
-		 
-		 
-<!-- <md-button ng-click="logout()"> {{user.userName}} logout </md-button>
- -->	</div>
-	</md-toolbar>
-</div>
-
+<nav-bar></nav-bar>
 
 <div layout="row" layout-align="center">
 
 <side-nav></side-nav>	
 
+
 	<div flex="75" class="container" layout="column">
 
-
-
-
-		<div layout="row" layout-align="{{align1}} {{align2}}" layout-wrap layout-padding>
-			<div ng-repeat="note in searchNotes" flex={{flex}}>
+			<div layout="row" layout-align="{{align1}} {{align2}}" layout-wrap layout-padding>
+			<div ng-repeat="note in allNotesByLabel" flex={{flex}}>
 
 				<md-card  ng-mouseenter="visible=''" ng-mouseleave="visible='hidden'"
 					style="background-color:{{note.color}};" >
@@ -262,8 +171,11 @@ placeholder="Date" show-todays-date="" min-date="date" ng-model="remind"  ng-cha
              </md-menu-content> </md-menu> </md-menu-bar>
 
 				</div>
+
 				</md-card-content> </md-card>
 			</div>
 		</div>
+
+
 </div>
 </div>

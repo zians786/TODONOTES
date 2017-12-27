@@ -14,11 +14,13 @@ public interface Service {
 	
 	String forgetPassword(String email);
 	
-	String resetPassword(String token, User user);
+	String resetPassword(int userId,String password);
 	
 	String registerSocialAccountUser(JsonNode profile);
 	
 	User getUser(String userName);
 	
 	User getUserInfo(String token);
+	
+	int verifyTokenReset(String token); 
 }

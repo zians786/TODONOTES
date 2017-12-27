@@ -15,6 +15,9 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
 	getUserdetail();
 	$scope.visible='hidden';
 
+	
+	
+	
 
     // for Notification using toastr
     var reminderCheck=function(note){
@@ -63,7 +66,6 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
 	var getLabel=labelService.read();
 	getLabel.then(function(response){
 		$scope.readLabel=response.data;
-		console.log($scope.readLabel);
 	});
 	}
 	getAllLabel();
@@ -87,6 +89,14 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
 });
 	return $scope.readNotes;
 	}
+	
+	
+	
+	
+	$scope.mycolor=function(){
+		console.log("dd");
+	}
+	
 	
 
 	
@@ -171,9 +181,9 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
 	
 	
 	// for adding user notes
-	$scope.addNote=function(){
+	$scope.addNote=function(note){
 		
-		var add=noteService.add($scope.note,$scope.error);
+		var add=noteService.add(note,$scope.error);
 		add.then(function(response){
 			console.log(response.data);
 			getNotes();
@@ -384,7 +394,36 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
 	    		getNotes();
 	    	});
 	    
-	    }    
+	    }
+	    
+	    
+	    $scope.remindSet=function(note,caseValue){
+	    	var date=new Date();
+    		date.setMinutes(0);
+    		date.setSeconds(0);
+	    	switch(caseValue){
+	    	case 0:
+	    		date.setHours(20);
+	    		break;
+	    	case 1:
+	    		date.setDate(date.getDate()+1);
+	    		date.setHours(8);
+	    		break;
+	    	case 2:
+	    		date.setHours(8);
+	    		var day=8-date.getDay();
+	    		date.setDate(date.getDate()+day);
+	    		break;
+	    	}
+	    	
+	    	note.reminder=date;
+	    	console.log(note);
+	    	
+	    }
+	
+	    
+	    
+	    
 	    
 	    $scope.reminderSet=function(note,caseValue){
 	    	var date=new Date();
@@ -482,6 +521,31 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
 		    	console.log(response.data);
 		    });
 	    }
+	   
+	    
+	// for redirecting label
+	    $scope.showLabels=function(){
+	    	   $location.path('label'); 
+	    }
+	    
+	       
+	    
+	// for gettingNoteByLabel 
+	    $scope.getNoteByLabel=function(labelName){
+	    	$scope.allNotesByLabel=[];var index=0;
+	    	$scope.matchLabel=labelName;
+	    	for(var i=0;i<allNotes.length;i++){
+	    		if(allNotes[i].label){
+	    			var allLabel=allNotes[i].label;
+	    			for(var j=0;j<allLabel.length;j++){
+	    				if(allLabel[j].labelName==labelName){
+	    					$scope.allNotesByLabel[index++]=allNotes[i];
+	    				}
+	    			}
+	    		}
+	    	}
+	    	
+	    }
 	    
 	    
 	// for socail Share using feed
@@ -549,6 +613,9 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
 		
 		
 		$scope.searchAll=function(text){
+			var result=[];
+			$scope.searchNotes=result;
+			if(text.length>0){
 			var notes=allNotes;
 			var index=0;
 			var result=[];
@@ -579,6 +646,8 @@ todo.controller('noteController',function(toastr,$scope,noteService,loginService
 				}
 			}
 			console.log(result);
+			$scope.searchNotes=result;
+			}
 			return result;
 		}
 		

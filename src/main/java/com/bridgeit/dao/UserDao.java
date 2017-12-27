@@ -9,7 +9,7 @@ public interface UserDao {
 	void registerUser(User user);
 	int activateUser(int userId);
 	String getPassword(String email);
-	void resetPassword(int userId, User user);
+	void resetPassword(User user);
 	int getUserId(String userName);
 	User getUserByEmailId(String email);
 	User getUserByUserName(String userName);

@@ -23,14 +23,14 @@ todo.config([ '$stateProvider', '$urlRouterProvider',
 			$stateProvider.state('forgot',{
 				url:'/forgot',
 				templateUrl :'template/forgot.html',
-				controller:'forgotController'
+				controller:'loginController'
 				});
 		
 			
-			$stateProvider.state('reset',{
-				url:'/reset',
-				templateUrl :'template/reset.html',
-				controller:'resetController'
+			$stateProvider.state('resetPassword',{
+				url:'/resetPassword',
+				templateUrl :'template/resetPassword.html',
+				controller:'loginController'
 				});
 			
 			$stateProvider.state('home',{
@@ -46,7 +46,13 @@ todo.config([ '$stateProvider', '$urlRouterProvider',
 				controller:'noteController'
 			});
 
-			
+
+			$stateProvider.state('label',{
+				url:'/label',
+				templateUrl :'template/label.html',
+				controller:'noteController'
+			});
+
 			
 			$stateProvider.state('archive',{
 				url:'/archive',

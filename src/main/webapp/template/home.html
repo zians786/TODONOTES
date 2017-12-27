@@ -12,7 +12,7 @@
 	 
 
 		<div  layout="row" layout-align="center center">
-			<md-card> <md-card-content>
+			<md-card style="background-color:{{note.color}};"> <md-card-content>
 
 
 			<div contenteditable="true" data-text="Title" ng-model="note.title"
@@ -49,9 +49,9 @@
 
 
 <div layout-padding>Reminder :</div>
-<md-button ng-click="reminderSet(note,0)" layout="row" layout-align="space-between center"><span>Later today</span><span>8:00 PM</span></md-button>
-<md-button ng-click="reminderSet(note,1)" layout="row" layout-align="space-between center"><span>Tomorrow</span><span>8:00 AM</span></md-button>
-<md-button ng-click="reminderSet(note,2)" layout="row" layout-align="space-between center"><span>Next Week</span><span>MON, 8:00 AM</span></md-button>
+<md-button ng-click="remindSet(note,0)" layout="row" layout-align="space-between center"><span>Later today</span><span>8:00 PM</span></md-button>
+<md-button ng-click="remindSet(note,1)" layout="row" layout-align="space-between center"><span>Tomorrow</span><span>8:00 AM</span></md-button>
+<md-button ng-click="remindSet(note,2)" layout="row" layout-align="space-between center"><span>Next Week</span><span>MON, 8:00 AM</span></md-button>
 <br>
 <div layout-padding>Pickup Manually :</div>
 <br>
@@ -77,12 +77,12 @@ placeholder="Date" show-todays-date="" min-date="date" ng-model="remind"  ng-cha
 						<md-icon md-svg-icon="img/icons/image.svg"></md-icon>
 					</div>
 	
-					<div role="button" ng-click="archive(note)" aria-label="Archive">
+					<div role="button" ng-click="note.archived=true" aria-label="Archive">
 						<md-icon md-svg-icon="img/icons/archive.svg"></md-icon>
 					</div>
 					
 
-					<md-button ng-show="showTitle" ng-click="addNote()">Done</md-button>
+					<md-button ng-show="showTitle" ng-click="addNote(note)">Done</md-button>
 	
 			</div>
 
@@ -90,16 +90,28 @@ placeholder="Date" show-todays-date="" min-date="date" ng-model="remind"  ng-cha
 </md-card>
 </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- for Note Dialog Box -->
 
 
 			<div style="visibility: hidden">
 				<div class="md-dialog-container" id="myStaticDialog" >
-					<md-dialog layout-padding > 
+					<md-dialog layout-padding flex=50> 
 					
 		 <md-card-content>
-
-
+					<div ng-if="notes.image"><img ng-src={{notes.image}} style=" max-width: 100%;"></div>	
+					<div ng-if="notes.image"><md-icon ng-click="notes.image='';updateNote(notes)" flex-offset="95" md-svg-icon="img/icons/delete.svg"></md-icon></div>
 					<div contenteditable="true" ng-bind-html="notes.title"
 						ng-model="notes.title"
 						style="font-weight: bold; width: 500px; border: 0px; outline: 0px"></div>

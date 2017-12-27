@@ -63,7 +63,7 @@ public class Email {
 	@Async
 	public Boolean forgetEmail(String to,String token) {
 		Boolean status;
-		String url="http://localhost:8080/ToDoNotes/reset/"+token;
+		String url="http://localhost:8080/ToDoNotes/verifyToken/"+token;
 		final String from = "strangedoctor786@gmail.com";// change accordingly
 		final String password = "deadpool";
 		Properties properties = System.getProperties();

@@ -1,7 +1,9 @@
 package com.bridgeit.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,10 +40,10 @@ public class UserController {
 
 	@RequestMapping(value = { "/register" }, method = RequestMethod.POST)
 	public ResponseEntity<UserResponse> registration(@RequestBody User user) {
-		UserResponse message=new UserResponse();
-		
+		UserResponse message = new UserResponse();
+
 		if (validate.userValidate(user)) {
-			 message.setMessage(service.registrationValidate(user));
+			message.setMessage(service.registrationValidate(user));
 			return new ResponseEntity<UserResponse>(message, HttpStatus.OK);
 		} else {
 			message.setMessage("Please Enter Correct Values...");
@@ -54,8 +56,8 @@ public class UserController {
 		UserResponse response = new UserResponse();
 		String token = service.loginValidate(user);
 		if (token != null) {
-			
-			User userInfo=service.getUser(user.getUserName());
+
+			User userInfo = service.getUser(user.getUserName());
 			response.setMessage("Welcome " + userInfo.getUserName());
 			response.setEmail(userInfo.getEmail());
 			response.setProfilePicture(userInfo.getProfilePicture());
@@ -76,19 +78,47 @@ public class UserController {
 
 	}
 
-	@RequestMapping(value = { "/forgot" }, method = RequestMethod.POST)
-	public ResponseEntity<String> forgot(@RequestBody User user) {
+	@RequestMapping(value = { "/forgot/{email:.+}" }, method = RequestMethod.POST)
+	public ResponseEntity<String> forgot(@PathVariable String email) {
+		System.out.println(email);
 
-		String message = service.forgetPassword(user.getEmail());
+		String message = service.forgetPassword(email);
 		return new ResponseEntity<String>(message, HttpStatus.OK);
 
 	}
 
-	@RequestMapping(value = "/reset/{jwt:.+}", method = RequestMethod.POST)
-	public ResponseEntity<String> resetPassword(@PathVariable String jwt, @RequestBody User user) {
-		String status = service.resetPassword(jwt, user);
-		return new ResponseEntity<String>(status, HttpStatus.OK);
+	@RequestMapping(value = "/verifyToken/{jwt:.+}", method = RequestMethod.GET)
+	public void verifyTokenReset(@PathVariable String jwt, HttpSession httpSession, HttpServletResponse response)
+			throws Exception {
+		int userId = service.verifyTokenReset(jwt);
+		if (userId != 0) {
+			httpSession.setAttribute("userId", userId);
+			response.sendRedirect("http://localhost:8080/ToDoNotes/#!/resetPassword");
+		} else {
+			response.sendRedirect("http://localhost:8080/ToDoNotes/#!/login");
+		}
+	}
 
+	@RequestMapping(value = "/reset/{password}", method = RequestMethod.POST)
+	public ResponseEntity<UserResponse> resetPassword(@PathVariable String password, HttpSession httpSession) {
+		UserResponse message = new UserResponse();
+		try {
+			int userId = (int) httpSession.getAttribute("userId");
+			httpSession.removeAttribute("userId");
+
+			if (userId != 0) {
+				String status = service.resetPassword(userId, password);
+				message.setMessage(status);
+				return new ResponseEntity<UserResponse>(message, HttpStatus.OK);
+			} else {
+				message.setMessage("invalid Access");
+				return new ResponseEntity<UserResponse>(message, HttpStatus.CONFLICT);
+			}
+
+		} catch (Exception e) {
+			message.setMessage("invalid Access");
+			return new ResponseEntity<UserResponse>(message, HttpStatus.CONFLICT);
+		}
 	}
 
 	@RequestMapping(value = { "/logout" }, method = RequestMethod.POST)
@@ -103,13 +133,12 @@ public class UserController {
 		message = "Logout Successfully...";
 		return new ResponseEntity<String>(message, HttpStatus.OK);
 	}
-	
 
-	@RequestMapping(value= {"/getUser"},method=RequestMethod.POST)
-	public ResponseEntity<User> getUserInfo(HttpServletRequest request){
+	@RequestMapping(value = { "/getUser" }, method = RequestMethod.POST)
+	public ResponseEntity<User> getUserInfo(HttpServletRequest request) {
 		String token = request.getHeader("accToken");
-		User user=service.getUserInfo(token);
+		User user = service.getUserInfo(token);
 		return new ResponseEntity<User>(user, HttpStatus.OK);
-		
+
 	}
 }
