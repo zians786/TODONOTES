@@ -33,7 +33,8 @@ public class UserController {
 	@Autowired
 	Validation validate;
 
-	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
+	
+	@RequestMapping(value = {"/hello"}, method = RequestMethod.GET)
 	public String welcome() {
 		return "Welcome";
 	}

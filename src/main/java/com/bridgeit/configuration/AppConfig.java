@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -29,6 +30,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	    registry.addResourceHandler("/img/**").addResourceLocations("/img/");
 	    
 	}
+	
 	
 	   @Bean
 	   public ViewResolver viewResolver() {
