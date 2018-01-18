@@ -9,6 +9,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgeit.model.User;
 import com.bridgeit.model.UserResponse;
+import com.bridgeit.security.model.AuthenticatedUser;
 import com.bridgeit.service.Service;
 import com.bridgeit.validation.Validation;
 
@@ -33,13 +36,12 @@ public class UserController {
 	@Autowired
 	Validation validate;
 
-	
-	@RequestMapping(value = {"/hello"}, method = RequestMethod.GET)
+	@RequestMapping(value = { "/hello" }, method = RequestMethod.GET)
 	public String welcome() {
 		return "Welcome";
 	}
 
-	@RequestMapping(value = { "/register" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/user/register" }, method = RequestMethod.POST)
 	public ResponseEntity<UserResponse> registration(@RequestBody User user) {
 		UserResponse message = new UserResponse();
 
@@ -52,7 +54,7 @@ public class UserController {
 		}
 	}
 
-	@RequestMapping(value = { "/login" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/user/login" }, method = RequestMethod.POST)
 	public ResponseEntity<UserResponse> login(@RequestBody User user) {
 		UserResponse response = new UserResponse();
 		String token = service.loginValidate(user);
@@ -72,14 +74,14 @@ public class UserController {
 		}
 	}
 
-	@RequestMapping(value = "/activate/{jwt:.+}", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/activate/{jwt:.+}", method = RequestMethod.GET)
 	public ResponseEntity<String> activation(@PathVariable String jwt) {
 		String status = service.verifyToken(jwt);
 		return new ResponseEntity<String>(status, HttpStatus.OK);
 
 	}
 
-	@RequestMapping(value = { "/forgot/{email:.+}" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/user/forgot/{email:.+}" }, method = RequestMethod.POST)
 	public ResponseEntity<String> forgot(@PathVariable String email) {
 		System.out.println(email);
 
@@ -88,7 +90,7 @@ public class UserController {
 
 	}
 
-	@RequestMapping(value = "/verifyToken/{jwt:.+}", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/verifyToken/{jwt:.+}", method = RequestMethod.GET)
 	public void verifyTokenReset(@PathVariable String jwt, HttpSession httpSession, HttpServletResponse response)
 			throws Exception {
 		int userId = service.verifyTokenReset(jwt);
@@ -100,7 +102,7 @@ public class UserController {
 		}
 	}
 
-	@RequestMapping(value = "/reset/{password}", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/reset/{password}", method = RequestMethod.POST)
 	public ResponseEntity<UserResponse> resetPassword(@PathVariable String password, HttpSession httpSession) {
 		UserResponse message = new UserResponse();
 		try {
@@ -136,10 +138,18 @@ public class UserController {
 	}
 
 	@RequestMapping(value = { "/getUser" }, method = RequestMethod.POST)
-	public ResponseEntity<User> getUserInfo(HttpServletRequest request) {
-		String token = request.getHeader("accToken");
-		User user = service.getUserInfo(token);
-		return new ResponseEntity<User>(user, HttpStatus.OK);
+	public ResponseEntity<User> getUserInfo() {
+
+		AuthenticatedUser authenticatedUser=(AuthenticatedUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	int userId=(int)(long)authenticatedUser.getId();
+   
+		User user = service.getUserInfo(userId);
+
+		if (user == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		} else {
+			return new ResponseEntity<User>(user, HttpStatus.OK);
+		}
 
 	}
 }

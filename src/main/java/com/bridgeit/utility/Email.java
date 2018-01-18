@@ -21,7 +21,7 @@ public class Email {
 	@Async
 	public Boolean registrationEmail(String to,String jwToken) {
 		Boolean status;
-		String url="http://localhost:8080/ToDoNotes/activate/"+jwToken;
+		String url="http://localhost:8080/ToDoNotes/user/activate/"+jwToken;
 		final String from = "strangedoctor786@gmail.com";// change accordingly
 		final String password = "deadpool";
 		Properties properties = System.getProperties();
@@ -63,7 +63,7 @@ public class Email {
 	@Async
 	public Boolean forgetEmail(String to,String token) {
 		Boolean status;
-		String url="http://localhost:8080/ToDoNotes/verifyToken/"+token;
+		String url="http://localhost:8080/ToDoNotes/user/verifyToken/"+token;
 		final String from = "strangedoctor786@gmail.com";// change accordingly
 		final String password = "deadpool";
 		Properties properties = System.getProperties();

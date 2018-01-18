@@ -34,7 +34,7 @@ public class JwtTokenValidator {
 
         try {
             Claims body = Jwts.parser()
-                    .setSigningKey("my-very-secret-key")
+                    .setSigningKey("qazxswed")
                     .parseClaimsJws(token)
                     .getBody();
 

@@ -12,11 +12,11 @@ public interface NoteDao {
  Note read(Note note);
  Note read(int noteId);
  List<Note> read(User user);
- void delete(Note note);
- void archive(Note note,int userId);
- void trash(Note note,int userId);
- void pin(Note note,int userId);
- void color(Note note,int userId);
+ void delete(int noteId);
+ void archive(int noteId,String status);
+ void trash(int noteId,String status);
+ void pin(int noteId,String status);
+ void color(int noteId,String color);
  void remind(Note note,int userId);
  
 }

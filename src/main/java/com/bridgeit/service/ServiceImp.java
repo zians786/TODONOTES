@@ -35,9 +35,10 @@ public class ServiceImp implements Service {
 		if (userDao.emailValidaton(user.getEmail())) {
 			return "User Already Exist with this Email...";
 		} else {
+			user.setRole("user");
 			userDao.registerUser(user);
 			String id = Integer.toString(user.getUserId());
-			String jwToken = jwt.jwtGenerator(id);
+			String jwToken = jwt.jwtGenerator(user);
 
 			email.registrationEmail(user.getEmail(), jwToken);
 
@@ -51,9 +52,9 @@ public class ServiceImp implements Service {
 		String jwToken;
 		user.setPassword(encrypt.encryptPassword(user.getPassword()));
 		if (userDao.loginValidate(user)) {
-			int id = userDao.getUserId(user.getUserName());
-			String uid = Integer.toString(id);
-			jwToken = jwt.jwtGenerator(uid);
+			User user2 = userDao.getUserByUserName(user.getUserName());
+	
+			jwToken ="Bearer "+ jwt.jwtGenerator(user2);
 		} else {
 			jwToken = null;
 		}
@@ -86,7 +87,7 @@ public class ServiceImp implements Service {
 		String result = null;
 		if (userDao.emailValidaton(userEmail)) {
 			User user = userDao.getUserByEmailId(userEmail);
-			String token=jwt.jwtGenerator(user.getUserId());
+			String token=jwt.jwtGenerator(user);
 			email.forgetEmail(userEmail, token);
 			result = "Password has been Sent to your email.";
 		} else {
@@ -115,7 +116,7 @@ public class ServiceImp implements Service {
 	}
 	
 	
-	@Override
+/*	@Override
 	public String registerSocialAccountUser(JsonNode profile) {
 
 		User user = userDao.getUserByEmailId((profile.get("email").asText()));
@@ -139,17 +140,22 @@ public class ServiceImp implements Service {
 		}
 
 	}
-
+*/
 	@Override
 	public User getUser(String userName) {
-		
-		return userDao.getUserByUserName(userName);
+				return userDao.getUserByUserName(userName);
 	}
 
 	@Override
-	public User getUserInfo(String token) {
-		int userId=jwt.jwtVerifyToken(token);
+	public User getUserInfo(int userId) {
 		return userDao.getUserByUserId(userId);
+	}
+
+
+	@Override
+	public String registerSocialAccountUser(JsonNode profile) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

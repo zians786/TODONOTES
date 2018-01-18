@@ -47,19 +47,21 @@ public class NoteServiceImp implements NoteService {
 
 	}
 
-	public void deleteNote(Note note) {
-		noteDao.delete(note);
+	public void deleteNote(int noteId) {
+		noteDao.delete(noteId);
 	}
 
-	public void updateNote(Note note, String token) {
+/*	public void updateNote(Note note, String token) {
 		int userId = Integer.parseInt(token);
 		
-		/*Note note1=noteDao.read(note);
+		Note note1=noteDao.read(note);
 		note1.setTitle(note.getTitle());
 		note1.setDescription(note.getDescription());
 		note1.setImage(note.getImage());
 		Date date=new Date();
-		note1.setModifiedDate(date);*/
+		note1.setModifiedDate(date);
+		
+		
 		User user = new User();
 		user.setUserId(userId);
 		note.setUser(user);
@@ -69,37 +71,36 @@ public class NoteServiceImp implements NoteService {
 		noteDao.update(note);
 
 	}
-
-	public List<Note> readNote(String token) {
+*/
+	public List<Note> readNote(int userId) {
 		User user=new User();
-		int id=Integer.parseInt(token);
-		user.setUserId(id);
-		
+		user.setUserId(userId);
 		return noteDao.read(user);
 	}
 
 	@Override
-	public void archiveNote(Note note,int userId) {
-		noteDao.archive(note, userId);
+	public void archiveNote(int noteId,String status) {
+		 noteDao.archive(noteId,status);
 	}
 
 	@Override
-	public void trashNote(Note note,int userId) {
-		noteDao.trash(note, userId);
+	public void trashNote(int noteId,String status) {
+		 noteDao.trash(noteId,status);
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void pinNote(Note note,int userId) {
-		noteDao.pin(note, userId);
+	public void pinNote(int noteId,String status) {
+		 noteDao.pin(noteId,status);
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void coloerNote(Note note,int userId) {
-		noteDao.color(note, userId);
+	public void colorNote(int noteId,String color) {
+		color="#"+color;
+		noteDao.color(noteId,color);
 	}
 
 	@Override
@@ -108,30 +109,30 @@ public class NoteServiceImp implements NoteService {
 	}
 	
 	public void setLabel(int labelId,int noteId) {
-		Label label = labelDao.read(labelId);
 		Note note=noteDao.read(noteId);
-		Set set=note.getLabel();
-		set.add(label);
-		note.setLabel(set);
-		noteDao.update(note);
+			Label label = labelDao.read(labelId);
+			Set set=note.getLabel();
+			set.add(label);
+			note.setLabel(set);
+			noteDao.update(note);	
 	}
 
 	@Override
 	public void deleteLabel(int labelId, int noteId) {
-		Label label = labelDao.read(labelId);
 		Note note=noteDao.read(noteId);
+		Label label = labelDao.read(labelId);
+		
 		Set set=note.getLabel();
 		set.remove(label);
 		note.setLabel(set);
 		noteDao.update(note);
 	}
-
 	@Override
 	public Note shareNote(String email, int noteId, int userId) {
 		if(userDao.emailValidaton(email)) {
 			Note note=noteDao.read(noteId);
 			User user=userDao.getUserByEmailId(email);
-			Set<User> userSet=new HashSet<>();
+			Set<User> userSet=note.getSharedUser();
 			userSet.add(user);
 			note.setSharedUser(userSet);
 			noteDao.update(note);
@@ -152,4 +153,22 @@ public class NoteServiceImp implements NoteService {
 		noteDao.update(note);
 		return note;
 	}
+
+	@Override
+	public void updateNote(Note note) {
+			Date date=new Date();
+			note.setModifiedDate(date);
+			noteDao.update(note);		
+	}
+	
+	public Boolean validateAccess(int userId,int noteId) {
+		Note note=noteDao.read(noteId);
+		User user=note.getUser();
+		if(userId!=user.getUserId()) {
+			return false;
+		}else {
+			return true;
+		}
+	}
+	
 }

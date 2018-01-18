@@ -3,6 +3,8 @@ package com.bridgeit.security;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import com.bridgeit.security.model.AuthenticatedUser;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,8 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 public class JwtAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-    	System.out.println("User Authenticated");
-        // Do do anything specific here
+   
+    	// Do do anything specific here
     }
 
 }
